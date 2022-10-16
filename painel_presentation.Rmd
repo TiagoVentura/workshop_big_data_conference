@@ -1,8 +1,8 @@
 ---
 title: "The Effect of Streaming Chat on Perceptions of Political Debates"
 author: "Tiago Ventura"
-institute: "University of Maryland, College Park"
-date: "09/29/2021"
+institute: "Center for Social Media and Politics | NYU"
+date: "10/21/2022"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "custom.css"]
@@ -155,9 +155,10 @@ class:middle
 
 --
 
-**We then surveyed the respondents after the debate and measured the effects of streaming chats. **
+.red[We then surveyed the respondents after the debate and measured the effects of streaming chats.]
 
-**And collect comments from facebook streaming chatboxes.**
+.red[And collect comments from facebook streaming chatboxes.]
+
 --
 
 ---
