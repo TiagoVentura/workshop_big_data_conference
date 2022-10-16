@@ -1,0 +1,192 @@
+:root {
+/*-- COLOR VARIABLES --*/
+--DarkBlue:           #003087;
+--Blue:               #005EB8;
+--BrightBlue:         #0072CE;
+
+--Black:              #231F20;
+--DarkGrey:           #425563;
+--MidGrey:            #768692;
+--PaleGrey:           #E8EDEE;
+--White:              #FFFFFF;
+
+--DarkGreen:          #006747;
+--Green:              #009639;
+--AquaGreen:          #00A499;
+
+--Purple:             #330072;
+--DarkPink:           #7C2855;
+--Pink:               #AE2573;
+--DarkRed:            #8A1538;
+--Red:                #DA291C;
+
+--my-blue:            #122140;
+--my-yellow:          #e5bf00;
+--my-gold:            #ae8f00;
+
+--my-coral:          #903030;
+--my-red:            #600018;
+--my-pink:           #c09090;
+}
+
+.footnote {
+  position: absolute;
+  bottom: 60px;
+  padding-right: 4em;
+  font-size: 0.8em;
+}
+
+.title-slide h1 {
+  font-size: 2.25em;
+}
+
+.title-slide h2 {
+  font-size: 1.75em;
+}
+
+.title-slide h3 {
+  font-size: 1.25em ;
+}
+
+
+div.my-footer {
+    background-color: #57068c;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 30px;
+    width: 100%;
+}
+div.my-footer span {
+    font-size: 12pt;
+    color: #FFFFFF;
+    position: absolute;
+    left: 20px;
+    font-weight: bold;
+    bottom: 10px;
+}
+.pull-left-narrow {
+  float: left;
+  width: 20%;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+body { font-family: 'Lato', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif; }
+h1, h2, h3 { font-family: 'Yanone Kaffeesatz';}
+
+.remark-code,.remark-inline-code {
+  font-family: "Source Code Pro", "Lucida Console", monospace;
+  font-size: 80%;
+}
+
+.remark-slide-number {
+  position: inherit;
+}
+
+.remark-slide-number .progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  display: block;
+  left: 0;
+  right: 0;
+}
+
+.remark-slide-number .progress-bar {
+  height: 100%;
+  background-color: var(--header-color);
+}
+
+.red{
+color: #C93312;  
+}
+
+
+
+
+
+/*-- Custom classes for text emphasis --*/
+.blue       { color:  var(--Blue) }
+.green      { color:  var(--Green) }
+.pink       { color:  var(--Pink) }
+.warmyellow { color:  var(--WarmYellow) }
+.palegrey   { color:  var(--PaleGrey)}
+.my-blue    { color:  var(--my-blue) }
+.darkblue    { color:  var(--DarkBlue) }
+.my-yellow  { color:  var(--my-yellow) }
+.my-gold    { color:  var(--my-gold)}
+.my-red     { color:  var(--my-red) }
+.my-coral   { color:  var(--my-coral) }
+.my-pink    { color:  var(--my-pink) }
+.black    { color:  var(--Black) }
+.my-hot-pink { background-color: #ff69b4 }
+
+
+/*-- EXPERIMENTAL -----------------------------------------------------------*/
+
+/*-- 3 column layout --*/
+.left-col {
+  width: 29%;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  float: left;
+}
+
+.center-col {
+  width: 29%;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  float: left;
+}
+
+.right-col {
+  width: 29%;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  float: left;
+}
+
+/* five-column layout */
+
+/*.flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.column {
+  float: left;
+  width: 25%;
+  text-align: center;
+}*/
+
+/*.columns { display: flex; }*/
+
+.pull-left {
+  padding-top: 0px;
+}
+
+.pull-left-narrow {
+  float: left;
+  width: 20%;
+}
+
+.pull-right-wide {
+  float: right;
+  width: 75%;
+}
+/* Clear floats after the columns */
+.pull-right-wide + * { clear: both; }
+
+/*-- Text muting/fading --*/
+.fade { opacity: 0.5; }
+
+
+  
