@@ -9,12 +9,22 @@ The workshop will cover the basics of accessing data on three different platform
 
 To download all the materials, you can just clone this repository, and work throught the `Quarto` notebooks for each of the different sessions. 
 
-Below you can link the links for the slides and notebooks we will work through in the workshop:
+Below you can link the links for the slides and notebooks we will work through in the workshop. 
 
+# Slides
 
-- Slides: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_telegram.html)
+- [Twitter Presentation](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_twitter.html)
 
-- Notebooks:[Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
+- [Youtube Presentation](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html) 
+- [Telegram Presentation](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_telegram.html)
+
+# Notebooks
+
+- [Twitter Notebook](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html) 
+
+- [Youtube Notebook](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html)
+
+- [Telegram Notebook](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
 
 
 Enjoy!
