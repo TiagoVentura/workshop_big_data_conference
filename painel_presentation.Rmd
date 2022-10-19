@@ -1,8 +1,7 @@
 ---
 title: "The Effect of Streaming Chat on Perceptions of Political Debates"
-author: "Tiago Ventura"
-institute: "Center for Social Media and Politics | NYU"
-date: "10/21/2022"
+author: "Tiago Ventura | Center for Social Media and Politics | NYU"
+date: "<span style = 'font-size: 70%;'> Big Data for Development and Governance, 10/21/2022 </span> <br><br> <span style = 'font-size: 70%; font-style: italic'> Joint work with  Kevin Munger, Katherine McCabe, Victory Asbury and Keng-Chi </span>"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "custom.css"]
@@ -21,7 +20,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(messagwese=FALSE, warning = FALSE)
-xaringanthemer::style_mono_accent(base_color ="#23395b", 
+xaringanthemer::style_mono_light(base_color ="#23395b", 
                                   title_slide_text_color="#23395b", 
                                   title_slide_background_color = "#fbf9f4", 
                                   background_color = "#fbf9f4", 
@@ -32,50 +31,37 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(message=FALSE, warning = FALSE, error=TRUE, cache=TRUE)
 ``` 
 
-class:middle 
+class:middle
 
-## Outline
+### Summary of the Talk
 
-- **The Effect of Streaming Chats on Perceptions of Debates.** Journal of Communication, 2021. Joint work with  Kevin Munger, Katherine McCabe, Victory Asbury and Keng-Chi* .footnote[ Thanks to Russell Sage Foundation and the Summer Institute in Computational Social Science for providing funding and institutional support to the projects ] 
+--
 
-- Future work: **Contextual cues and majority illusion on social media**
+`r icons::fontawesome("arrow-alt-circle-right")` **Streaming chats (e.g Facebook Lives, Twitch...) accentuate misperceptions about political events**
 
+- Streaming chats are a representation of what social media is: 
+
+      -  information processing + audience engagement + contextual cues
+
+--
+
+`r icons::fontawesome("arrow-alt-circle-right")` **Online Field Experiment + Comments Data from Facebook**
+
+- Experiment: Vary platform where users watch Democrats primary debate
+
+- Social Media Data: Scrapped comments from Facebook lives.
+
+--
+
+`r icons::fontawesome("arrow-alt-circle-right")` **Main results - Comments accentuate misperceptions:** 
+
+  - Lower feeling thermometer to certain candidates subject to toxic, negative comments.
+      
+  - Distort inferences about candidate viability.
 
 ---
-class:middle, center, inverse
+class:middle
 
-## Streaming Chats and Politics
-
----
-
-## Recent Changes on Media Market. 
-
---
-
-- New media technologies <~~> Media Consumption and Broadcasting becoming more social.  
-
---
-
-- Users move from passive consumers to an active co-creators of the media experience. 
-
---
-
-- On the user side: emergence of social media app brings the user to the center of media production. 
-
---
-
-- On the supply side: Media producers started to integrate their products with a strong audience participation. 
-
-    - Dual Screening: Encouraging audiences to engage with their content via social media.
-
---
-
----
-class: center, middle
-
-### **Streaming Chats** are the most recent and powerful manifestation of these user-centered technologies.
-
----
 ## Streaming Chats
 
 --
@@ -106,44 +92,24 @@ Popular among the younger generations.
 ---
 class: middle, center
 
-### AOC
-
-```{r echo=FALSE, out.width="50%"}
-knitr::include_graphics("./figs/aoc.png")
-```
-
 ### Jair Bolsonaro
 
-```{r echo=FALSE, out.width="50%"}
+```{r echo=FALSE, out.width="80%"}
 knitr::include_graphics("./figs/bolso.png")
 ```
 
 ---
-class: center, inverse
-
-### Are we paying enough attention to these technologies?
-
-<br><br>
-
-```{r echo=FALSE, out.width = "60%"}
-knitr::include_graphics("./figs/gu.png")
-
-```
- 
----
 class: center, middle
 
 
-### What are the effects of <a style="color:green"> streaming chats </a> on the public viewing experiences and political misperceptions? 
+### What are the effects of <a style="color:red"> streaming chats </a> on the public viewing experiences and political misperceptions? 
 
 ---
 class:middle
 
-## Streaming Chats and Perceptions of Political Debates
+### Streaming Chats and Perceptions of Political Debates
 
-
-####.red[We combine a large scale ''field" experiment" with data scrapped from Facebook streaming chats.]
-
+**We combine a large scale ''field" experiment" with data scrapped from Facebook streaming chats.**
 
 --
 
@@ -157,66 +123,7 @@ class:middle
 
 .red[We then surveyed the respondents after the debate and measured the effects of streaming chats.]
 
-.red[And collect comments from facebook streaming chatboxes.]
-
 --
-
----
-class:middle
-## How are streaming chats different from dual screening ?
-
-- **Different audience**. 6 out 10 young americans prefer to use online streaming to watch TV (Pew,  2017). 
-  
-- **Different Technology**: Chat streams at eye-level; only one, quick, and fast conversation. 
-
-- **More cross-cutting information**: particularly on political debates
-
----
-class: middle
-
-- **Shift from polite (possibly partisan) broadcasters towards an experience similar to comments sections**: short comments, memes, others 
-
-- **Chaotic Discussion**:Hard to sort, only see comments in the aggregate,   prone to lead to majority illusion.
-
-- **Priming a very different set of issues**: most of them do not appear on the public discussions. 
-
-
----
-class:middle
-
-## How do streaming chats influence perceptions?
-
-
-- **Frequency**: high volume of very short comments.
-
-- **Toxicity**: almost anonymity and size of the comments are prone to high levels of toxicity. 
-
-- **Content**: topics are mostly distinct from the ones discussed publicly during campaigns. 
-
-- **Context**: comments' composition leads to inaccurate inferences of overall public.
-
-
----
-class:inverse, middle, center
-
-## Research Design
-
----
-## Research Design and Sample
-
-Two-Wave On-line Survey in September 2019 through MTurk (following Gross, Porter and Wood, 2019). 
-
-**Wave 1 pre-debate survey with 2352 respondents**
-
-- Identified respondents likely to watch debate, have Facebook account, could watch debate on a computer.
-
-Encouraged 1095 eligible and interested participants to watch debate on randomly assigned platform.
-    
-**Wave 2 survey with 908 respondents**
-
-- Analysis focuses on 576 Wave 2 Democratic respondents (including leaners) who watched at least part of the debate.
-
-- N= 204 (Control), N= 174 (Expert), N= 198 (Social)
 
 ---
 
@@ -246,30 +153,6 @@ To complement our analysis, we scrapped the comments on the two platforms.
 - Labeled the comments manually to identify topics. 
 
 - Deep Learning Models to identify toxicity. 
-
----
-
-## Hypotheses
-
-<br><br>
-```{r echo=FALSE}
-
-d <- read.csv("figs/hyp.csv")
-
-library(kableExtra)
-
-d %>%
- kable(., "html", booktabs = T,align = c('c','l','l')) %>%
-  kable_styling(latex_options = c("striped",
-                                  "scale_down","repeat_header"),
-                font_size = 14,
-                # font_size = 12,
-                full_width = T) %>% 
-  column_spec(1, bold=T, width = '1in') %>% 
-  column_spec(2,width = '3in') %>% 
-  column_spec(3,width = '3in') 
-
-```
 
 ---
 class:inverse, middle, center
@@ -304,7 +187,7 @@ knitr::include_graphics("./figs/topics_3by_cand.png")
 ]
 
 ---
-#### Mostly Negative Polarity about the Candidates
+### Mostly Negative Polarity about the Candidates
 
 .center[
 ```{r  echo=FALSE, out.width= '80%'}
@@ -318,7 +201,7 @@ class:inverse, middle, center
 ## Experimental Results
 
 ---
-## Frequency and Toxicity Hypotheses
+### Subjective Well-Being
 .center[
 Facebook chat somewhat less informative, enjoyable, and engaging
 ```{r  echo=FALSE, out.width= '80%'}
@@ -327,14 +210,14 @@ knitr::include_graphics("./figs/frequencyplot.png")
 ]
 
 ---
-## Feeling Thermomethers about the Candidates
+### Feeling Thermomethers about the Candidates
 
 ```{r  echo=FALSE, out.width= '80%'}
 knitr::include_graphics("./figs/ftplot.png")
 ```
 
 ---
-## Content Effect
+### Content Effect
 .center[
 ```{r  echo=FALSE, out.width= '80%'}
 knitr::include_graphics("./figs/ft_on_negative_comments.png")
@@ -343,14 +226,14 @@ knitr::include_graphics("./figs/ft_on_negative_comments.png")
 
 
 ---
-## Poll Performance
+### Poll Performance
 
 ```{r  echo=FALSE, out.width= '80%'}
 knitr::include_graphics("./figs/pollplot.png")
 ```
 
 ---
-## Context Effect
+### Context Effect
 .center[
 ```{r  echo=FALSE, out.width= '80%'}
 knitr::include_graphics("./figs/polls_on_positive_comments.png")
@@ -358,9 +241,8 @@ knitr::include_graphics("./figs/polls_on_positive_comments.png")
 ]
 
 ---
-## Summary
+## Results
 
-.pull-left[
 **Main Findings**:
 
 - Creates worse viewing experience.
@@ -371,18 +253,8 @@ knitr::include_graphics("./figs/polls_on_positive_comments.png")
       
       - Distort inferences about candidate viability.
 
-]
-
----
-class: inverse, middle, center
-
-### As these new technologies start to dominate broadcasting of political events, attracting particularly <a style:"color=red"> younger audiences </a>, we need more social science <a style:"color=red"> descriptive and causal research </a> about the effects on users' behavior. 
-
 ---
 ## Next Steps: Contextual cues and majority illusion. 
-
-Python library to implement a visual setup for conjoint experiments with social media messages. Our team plans to use this tool to understand the effects of comments, reactions, and quotes on .red[majority illusion].
-
 
 .pull-left[
 
