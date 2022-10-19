@@ -16,10 +16,10 @@ output:
       titleSlideClass: ["center", "middle"]
       slideNumberFormat: |
         <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
           </div>
-        </div>
-
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r setup, include=FALSE, echo=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -54,7 +54,7 @@ class: about-me-slide, inverse, middle, center
 
 ### Tiago Ventura
 
-### Postdoc at Center for Social Media and Politics
+### Postdoc at Center for Social Media and Politics, NYU
 
 .fade[Incoming Assistant Professor, McCourt School, Georgetown University]
 
@@ -71,24 +71,25 @@ class:middle
 
 --
 
-### Twitter Data
+#### Twitter Data
 
-- Collecting data using the Academic Access through [academictwitteR](https://github.com/cjbarrie/academictwitteR)  in R
-- Some bits of network analysis
+- Collecting data using the Academic Access through [academictwitteR](https://github.com/cjbarrie/academictwitteR). 
+
+- Quick introduction to  network analysis with Twitter data
 
 --
 
-### Youtube Data. 
+#### Youtube Data. 
 
 -  [Python Library](https://youtube-data-api.readthedocs.io/en/latest/youtube_api.html) developed by Megan Brown, Senior Engenieer at the Center for Social Media and Politics at NYU, and some other colleagues. 
 
 --
 
-### Telegram Data
+#### Telegram Data
 
 - [Python module Telethon](https://docs.telethon.dev/en/stable/index.html).
 
---
+
 
 ---
 class: middle
@@ -112,7 +113,11 @@ class: middle
 
 --
 
-- We will not go through authentication with Twitter and Youtube APIs (instructions are provided for you to go through it later)
+- We will not go through authentication with the APIs (instructions are provided for you to go through it later).
+
+--
+
+- You can follow the code in the notebooks. However, the best approach is just to run this later by yourselve, with the proper access to the APIs. 
 
 --
 
@@ -133,7 +138,7 @@ More:
 
 - Slides: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_telegram.html)
 
-- Notebooks:[Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
+- Notebooks: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
 
 ---
 class:inverse, middle
@@ -147,10 +152,14 @@ class:middle
 
 --
 
+--
 - [Apply for a Twitter developer account](https://developer.twitter.com/en/apply-for-access). 
+
+--
 
 - [Apply to the academic research product track](https://developer.twitter.com/en/portal/petition/academic/is-it-right-for-you). 
 
+--
 - Save your keys in a local file in your computer. 
 --
 
@@ -297,11 +306,9 @@ tweets <-
 
 
 ---
-## What else?
-
 
 .center[
-```{r acad_opt,  echo=FALSE, out.width = "60%"}
+```{r acad_opt,  echo=FALSE, out.width = "70%"}
 knitr::include_graphics("figs/acad_opt.png") 
 ```
 ]
@@ -450,9 +457,65 @@ pacman::p_load(igraph)
 net <- graph.empty() #<<
 
 # Add nodes
-net <- add.vertices(net, #<<
+net <- add.vertices(net, 
         length(unique(c(data))), # number of nodes
         name=as.character(unique(c(data)))) # unique names
+
+# Add edges
+net <- add.edges(net, t(data)) 
+
+# summary
+summary(net)
+
+```
+]
+]
+---
+## Step 3: Create your network structure
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```{r eval=FALSE}
+pacman::p_load(igraph)
+
+# Create an empty network
+
+net <- graph.empty() 
+
+# Add nodes
+net <- add.vertices(net, #<<
+        length(unique(c(data))), # number of nodes #<<
+        name=as.character(unique(c(data)))) # unique names #<<
+
+# Add edges
+net <- add.edges(net, t(data)) 
+
+# summary
+summary(net)
+
+```
+]
+]
+---
+## Step 3: Create your network structure
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```{r eval=FALSE}
+pacman::p_load(igraph)
+
+# Create an empty network
+
+net <- graph.empty() 
+
+# Add nodes
+net <- add.vertices(net, 
+        length(unique(c(data))), # number of nodes 
+        name=as.character(unique(c(data)))) # unique names 
 
 # Add edges
 net <- add.edges(net, t(data)) #<<
@@ -541,6 +604,17 @@ tweets_tidy_rt <- left_join(tweets_tidy_rt, tidy_entities)
 E(net)$domain <- tweets_tidy_rt$domain #<<
 ```
 ]
+.panel[.panel-name[Domains]
+
+```{r}
+tweets_tidy_rt %>%
+  janitor::tabyl(domain) %>%
+  arrange(desc(n)) %>% #<<
+  drop_na(domain) %>%
+  slice(1:10)
+```
+
+]
 
 .panel[.panel-name[Output]
 
@@ -558,7 +632,7 @@ Two very common concepts in network science are in-degree and out-degree.
 
 - In-degree refers to how many links pointing to themselves the user has.
 
-- Out-degree means how many retweets the user has given.
+- Out-degree means how many edges originated at this user. 
 
 A user is called an authority when their in-degree is high. 
 
@@ -630,6 +704,9 @@ comunidades<- data_frame(membership=V(net)$membership)
 
 comunidades %>% 
     count(membership) %>% 
+    ungroup() %>%
+    mutate(total=sum(n), 
+           prop_community=n/total) %>%
     arrange(desc(n)) %>%
     top_n(5)
 
@@ -685,6 +762,14 @@ users_most_retweets <-authorities %>%
                       mutate(data_user=map(name,
                              get_user_profile)) %>% #<<
                       unnest()
+```
+
+]
+.panel[.panel-name[Outpute]
+
+```{r}
+# I will get only from the 100 most retweeted to save some time. 
+users_most_retweets
 ```
 
 ]

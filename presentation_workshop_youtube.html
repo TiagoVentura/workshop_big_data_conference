@@ -38,7 +38,7 @@ class:inverse, middle
 ---
 class:middle
 
-What I am presenting here follows very closely the [notebook](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) and [Python Library](https://pypi.org/project/youtube-data-api/) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU, and some other colleagues. 
+What I am presenting here follows very closely a [notebook](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) using the [Python Library youtube-data-api](https://pypi.org/project/youtube-data-api/) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU, and some other colleagues. 
 
 ---
 class: inverse, middle
@@ -85,12 +85,19 @@ pip install youtube-data-api
   
 ### A quick guide: [https://developers.google.com/youtube/v3/getting-started](https://developers.google.com/youtube/v3/getting-started)
   
-1. You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
+--
 
-2. Create a project in the &lt;a href="https://console.developers.google.com/apis/"&gt;Google Developers Console&lt;/a&gt; and &lt;a href="https://developers.google.com/youtube/registering_an_application"&gt;obtain authorization credentials&lt;/a&gt; so your application can submit API requests.
+- You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
 
-3. After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+--
 
+- Create a project in the &lt;a href="https://console.developers.google.com/apis/"&gt;Google Developers Console&lt;/a&gt; and &lt;a href="https://developers.google.com/youtube/registering_an_application"&gt;obtain authorization credentials&lt;/a&gt; so your application can submit API requests.
+
+--
+
+- After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+
+--
 ---
 ## Calling packages
   
@@ -168,16 +175,16 @@ pd.DataFrame([channel_metadata]).head()
 ## 0  UC3XTzVzaHQEd30rQbuvCtTQ  LastWeekTonight           1.395179e+09     None   
 ## 
 ##                                          description  view_count video_count  \
-## 0  Breaking news on a weekly basis. Sundays at 11...  3470544302         400   
+## 0  Breaking news on a weekly basis. Sundays at 11...  3474260272         400   
 ## 
 ##   subscription_count playlist_id_likes       playlist_id_uploads  \
 ## 0            9070000                    UU3XTzVzaHQEd30rQbuvCtTQ   
 ## 
 ##                                            topic_ids country  \
-## 0  https://en.wikipedia.org/wiki/Politics|https:/...    None   
+## 0  https://en.wikipedia.org/wiki/Society|https://...    None   
 ## 
 ##              collection_date  
-## 0 2022-10-17 12:24:19.607266
+## 0 2022-10-19 11:29:03.272270
 ```
 
 ---
@@ -199,11 +206,11 @@ subs = yt.get_subscriptions(channel_id)
 ## 4            Cinemax  UCYbinjMxWwjRpp4WqgDqEDA   youtube#channel   
 ## 
 ##    subscription_publish_date            collection_date  
-## 0               1.395357e+09 2022-10-17 12:24:20.012856  
-## 1               1.395357e+09 2022-10-17 12:24:20.012900  
-## 2               1.395357e+09 2022-10-17 12:24:20.012935  
-## 3               1.395357e+09 2022-10-17 12:24:20.012978  
-## 4               1.424812e+09 2022-10-17 12:24:20.013012
+## 0               1.395357e+09 2022-10-19 11:29:04.142185  
+## 1               1.395357e+09 2022-10-19 11:29:04.142232  
+## 2               1.395357e+09 2022-10-19 11:29:04.142269  
+## 3               1.395357e+09 2022-10-19 11:29:04.142304  
+## 4               1.424812e+09 2022-10-19 11:29:04.142339
 ```
 
 ---
@@ -242,11 +249,11 @@ df.head()
 ## 4  DNy6F7ZwX8I  UC3XTzVzaHQEd30rQbuvCtTQ  1.662979e+09   
 ## 
 ##              collection_date  
-## 0 2022-10-17 12:24:20.742801  
-## 1 2022-10-17 12:24:20.742847  
-## 2 2022-10-17 12:24:20.742883  
-## 3 2022-10-17 12:24:20.742918  
-## 4 2022-10-17 12:24:20.742952
+## 0 2022-10-19 11:29:04.805890  
+## 1 2022-10-19 11:29:04.805924  
+## 2 2022-10-19 11:29:04.805952  
+## 3 2022-10-19 11:29:04.805978  
+## 4 2022-10-19 11:29:04.806003
 ```
 
 ---
@@ -299,11 +306,11 @@ pd.DataFrame(video_meta[:5])
 ## 4  John Oliver discusses the wildly popular telev...             24   
 ## 
 ##   video_view_count video_comment_count video_like_count video_dislike_count  \
-## 0           756465               10602            48415                None   
-## 1          3124720                5865            88343                None   
-## 2          4641190               11997           133840                None   
-## 3          4555024               14698           168603                None   
-## 4          4967062                9008           118005                None   
+## 0          2344480               24895            98593                None   
+## 1          3251850                5956            90164                None   
+## 2          4774576               12110           135467                None   
+## 3          4646414               14835           171157                None   
+## 4          5053055                9073           119449                None   
 ## 
 ##                                     video_thumbnail video_tags  \
 ## 0  https://i.ytimg.com/vi/Ns8NvPPHX5Y/hqdefault.jpg              
@@ -313,11 +320,11 @@ pd.DataFrame(video_meta[:5])
 ## 4  https://i.ytimg.com/vi/DNy6F7ZwX8I/hqdefault.jpg              
 ## 
 ##              collection_date  
-## 0 2022-10-17 12:24:22.299867  
-## 1 2022-10-17 12:24:22.299906  
-## 2 2022-10-17 12:24:22.299936  
-## 3 2022-10-17 12:24:22.299967  
-## 4 2022-10-17 12:24:22.299994
+## 0 2022-10-19 11:29:08.185039  
+## 1 2022-10-19 11:29:08.185085  
+## 2 2022-10-19 11:29:08.185130  
+## 3 2022-10-19 11:29:08.185165  
+## 4 2022-10-19 11:29:08.185198
 ```
 
 ---
@@ -361,39 +368,39 @@ df.head()
 
 ```
 ##       video_id                              commenter_channel_url  \
-## 0  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC8VchCbzlg5zMJ...   
-## 1  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCJoZbMsnQbUj6c...   
-## 2  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC5AfX7vW6V-Jfw...   
-## 3  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC-ye5Ct8Ki5lur...   
-## 4  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCTqd43X3UjO_Sa...   
+## 0  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC33T1N9RE3fcVO...   
+## 1  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCs0wh1A5wdsme-...   
+## 2  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCrYqZMxVhwZm88...   
+## 3  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCZsmzndxgRH_G-...   
+## 4  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCrYqZMxVhwZm88...   
 ## 
 ##        commenter_channel_id commenter_channel_display_name  \
-## 0  UC8VchCbzlg5zMJrdgAzht3w               BlackJacketJones   
-## 1  UCJoZbMsnQbUj6cLLbnfaphA                      SLangel18   
-## 2  UC5AfX7vW6V-JfwrQeNba5ng                            Inu   
-## 3  UC-ye5Ct8Ki5lurn4LME0F1w                         J Lang   
-## 4  UCTqd43X3UjO_SaXH0dkZlSg                        V XXIII   
+## 0  UC33T1N9RE3fcVOVengApc1A                          真OPJM   
+## 1  UCs0wh1A5wdsme-ac7A6DbGw                          Kesya   
+## 2  UCrYqZMxVhwZm88rrpFSGfCQ                    usakiwi1986   
+## 3  UCZsmzndxgRH_G-PSqH4ngGg                Skyler Campbell   
+## 4  UCrYqZMxVhwZm88rrpFSGfCQ                    usakiwi1986   
 ## 
 ##                    comment_id  comment_like_count  comment_publish_date  \
-## 0  UgzdwggUyYfmCTZ62Yt4AaABAg                   0          1.666038e+09   
-## 1  UgzUNVbsN3oSMfPqf8l4AaABAg                   0          1.666038e+09   
-## 2  UgyJDtcn9cs3PaugtuR4AaABAg                   0          1.666038e+09   
-## 3  UgxxKwyMgmwypePXVwx4AaABAg                   1          1.666038e+09   
-## 4  UgxRvQaVJ7329_YXvKR4AaABAg                   0          1.666038e+09   
+## 0  UgxKgKUpJXFFlq4_Arp4AaABAg                   0          1.666208e+09   
+## 1  Ugzo2Ae21jNtIP6Yqet4AaABAg                   1          1.666207e+09   
+## 2  UgyqYBiXrGCfy0OLCNN4AaABAg                   0          1.666207e+09   
+## 3  Ugyr9IyRiZ0NVrYKz494AaABAg                   0          1.666207e+09   
+## 4  UgyaT4vkQXpDKKLjPxZ4AaABAg                   0          1.666207e+09   
 ## 
 ##                                                 text commenter_rating  \
-## 0  wow this is so stupid. waiting for a single go...             none   
-## 1  But “anticipated” means they don’t know! And t...             none   
-## 2  the most infuriating thing about this is that ...             none   
-## 3  I'm leftist but this is not the hill to die on...             none   
-## 4  From all the recent John Oliver segments this ...             none   
+## 0  Having done as I said, rolling around in the e...             none   
+## 1  We dont have gender pronounced here,\nNo past ...             none   
+## 2  I didn't care for the part saying God made me ...             none   
+## 3   Helping people play protect did not help anybody             none   
+## 4  Compare this med to opiods that have gotten so...             none   
 ## 
 ##   comment_parent_id            collection_date  reply_count  
-## 0              None 2022-10-17 12:24:22.827837            0  
-## 1              None 2022-10-17 12:24:22.827921            0  
-## 2              None 2022-10-17 12:24:22.827984            0  
-## 3              None 2022-10-17 12:24:22.828047            0  
-## 4              None 2022-10-17 12:24:22.828103            0
+## 0              None 2022-10-19 11:29:08.735052            1  
+## 1              None 2022-10-19 11:29:08.735089            1  
+## 2              None 2022-10-19 11:29:08.735113            1  
+## 3              None 2022-10-19 11:29:08.735136            1  
+## 4              None 2022-10-19 11:29:08.735159            1
 ```
 ---
 ## Related videos
@@ -407,11 +414,11 @@ df.channel_title
 ```
 
 ```
-## 0                    LastWeekTonight
-## 1                    LastWeekTonight
+## 0                Saturday Night Live
+## 1                        Kendall Rae
 ## 2                    LastWeekTonight
-## 3                        Steve Mould
-## 4    The Daily Show with Trevor Noah
+## 3    The Daily Show with Trevor Noah
+## 4                    LastWeekTonight
 ## Name: channel_title, dtype: object
 ```
 
@@ -439,17 +446,17 @@ df[["channel_title", "video_title"]]
 ```
 
 ```
-##             channel_title                                        video_title
-## 0                     UOL  Flávio Bolsonaro diz que não teve fraude nas u...
-## 1  Jovem Pan News - Bauru  Eleitor não conseguiu votar. Fraude ou manipul...
-## 2       Rádio BandNews FM  Eleições: Resultados falsos da votação no exte...
-## 3          Jovem Pan News  Urna eletrônica: houve fraude no 1º turno? – B...
-## 4              CNN Brasil  Análise: Documento do PL de Bolsonaro aponta f...
-## 5            vejapontocom   Giro VEJA | O novo alerta de Alexandre de Moraes
-## 6         Canal Nostalgia                  URNA ELETRÔNICA / Dá pra Hackear?
-## 7     Domingo Espetacular  Governo investiga diferença entre pesquisas el...
-## 8                  TV 247  Militares não encontram fraude nas urnas. E o ...
-## 9   Jornalismo TV Cultura  Eleições 2022: Confira momento em que Lula ult...
+##            channel_title                                        video_title
+## 0           vejapontocom  Giro VEJA | Alexandre de Moraes põe pressão so...
+## 1                    UOL  Flávio Bolsonaro diz que não teve fraude nas u...
+## 2         Jovem Pan News  Urna eletrônica: houve fraude no 1º turno? – B...
+## 3      Rádio BandNews FM  Eleições: Resultados falsos da votação no exte...
+## 4             CNN Brasil  Análise: Documento do PL de Bolsonaro aponta f...
+## 5        Canal Nostalgia                  URNA ELETRÔNICA / Dá pra Hackear?
+## 6       justicaeleitoral    FATO: Ter cópia do boletim de urna não é fraude
+## 7                 RedeTV  Eleitores reclamam de fraude nas urnas durante...
+## 8  Jornalismo TV Cultura  Eleições 2022: Confira momento em que Lula ult...
+## 9            Record News  Bolsonaro diz que provará fraude nas urnas ele...
 ```
 
 ---

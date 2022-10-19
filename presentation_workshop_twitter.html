@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta name="author" content="Tiago Ventura | Center for Social Media and Politics | NYU" />
     <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -41,7 +43,7 @@ class: about-me-slide, inverse, middle, center
 
 ### Tiago Ventura
 
-### Postdoc at Center for Social Media and Politics
+### Postdoc at Center for Social Media and Politics, NYU
 
 .fade[Incoming Assistant Professor, McCourt School, Georgetown University]
 
@@ -58,24 +60,25 @@ class:middle
 
 --
 
-### Twitter Data
+#### Twitter Data
 
-- Collecting data using the Academic Access through [academictwitteR](https://github.com/cjbarrie/academictwitteR)  in R
-- Some bits of network analysis
+- Collecting data using the Academic Access through [academictwitteR](https://github.com/cjbarrie/academictwitteR). 
+
+- Quick introduction to  network analysis with Twitter data
 
 --
 
-### Youtube Data. 
+#### Youtube Data. 
 
 -  [Python Library](https://youtube-data-api.readthedocs.io/en/latest/youtube_api.html) developed by Megan Brown, Senior Engenieer at the Center for Social Media and Politics at NYU, and some other colleagues. 
 
 --
 
-### TikTok Data
+#### Telegram Data
 
-- [Python module](https://github.com/dfreelon/pyktok) developed by Dean Freelon and Colleagues to collect video, text, and metadata from Tiktok with no authentication required.
+- [Python module Telethon](https://docs.telethon.dev/en/stable/index.html).
 
---
+
 
 ---
 class: middle
@@ -97,11 +100,15 @@ class: middle
 
 --
 
-- We will not go through authentication with Twitter and Youtube APIs (instructions are provided for you to go through it later)
+- We will not go through authentication with the APIs (instructions are provided for you to go through it later).
 
 --
 
-- Particularly for Youtube and TikTok, I will just showcase others' people library to access data from these platforms.
+- You can follow the code in the notebooks. However, the best approach is just to run this later by yourselve, with the proper access to the APIs. 
+
+--
+
+- Particularly for Youtube and Telegram, I will just showcase others' people library to access data from these platforms.
 
 --
 
@@ -118,7 +125,7 @@ More:
 
 - Slides: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_telegram.html)
 
-- Notebooks:[Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
+- Notebooks: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
 
 ---
 class:inverse, middle
@@ -132,10 +139,14 @@ class:middle
 
 --
 
+--
 - [Apply for a Twitter developer account](https://developer.twitter.com/en/apply-for-access). 
+
+--
 
 - [Apply to the academic research product track](https://developer.twitter.com/en/portal/petition/academic/is-it-right-for-you). 
 
+--
 - Save your keys in a local file in your computer. 
 --
 
@@ -288,11 +299,9 @@ tweets &lt;-
 
 
 ---
-## What else?
-
 
 .center[
-&lt;img src="figs/acad_opt.png" width="60%" /&gt;
+&lt;img src="figs/acad_opt.png" width="70%" /&gt;
 ]
 
 ---
@@ -316,20 +325,21 @@ tweets_tidy
 
 ```
 ## # A tibble: 6 × 31
-##   tweet_id    user_…¹ text  possi…² conve…³ lang  source creat…⁴ autho…⁵ in_re…⁶ user_…⁷ user_…⁸ user_…⁹ user_…˟ user_…˟
-##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;  
-## 1 1577066499… cainsw… "RT … FALSE   157706… pt    Twitt… 2022-1… 809471… &lt;NA&gt;    felici… 2016-1… ⚠️ edtwt FALSE   "all I…
-## 2 1577066498… nandam… "RT … FALSE   157706… pt    Twitt… 2022-1… 422691… &lt;NA&gt;    Fernan… 2009-0… BH      FALSE   "Baixi…
-## 3 1577066498… fran51… "RT … FALSE   157706… pt    Twitt… 2022-1… 133561… &lt;NA&gt;    fran    2020-1… &lt;NA&gt;    FALSE   ""     
-## 4 1577066498… juliam… "RT … FALSE   157706… pt    Twitt… 2022-1… 839520… &lt;NA&gt;    LULA 1… 2017-0… konoha  FALSE   "Rael …
-## 5 1577066497… Comerc… "@Au… FALSE   157706… pt    Twitt… 2022-1… 155826… 152441… Heleni… 2022-0… &lt;NA&gt;    FALSE   ""     
-## 6 1577066497… caralh… "RT … FALSE   157706… pt    Twitt… 2022-1… 136448… &lt;NA&gt;    modesti 2010-0… &lt;NA&gt;    FALSE   "cidad…
-## # … with 16 more variables: user_protected &lt;lgl&gt;, user_pinned_tweet_id &lt;chr&gt;, user_profile_image_url &lt;chr&gt;,
-## #   user_url &lt;chr&gt;, retweet_count &lt;int&gt;, like_count &lt;int&gt;, quote_count &lt;int&gt;, user_tweet_count &lt;int&gt;,
-## #   user_list_count &lt;int&gt;, user_followers_count &lt;int&gt;, user_following_count &lt;int&gt;, sourcetweet_type &lt;chr&gt;,
-## #   sourcetweet_id &lt;chr&gt;, sourcetweet_text &lt;chr&gt;, sourcetweet_lang &lt;chr&gt;, sourcetweet_author_id &lt;chr&gt;, and abbreviated
-## #   variable names ¹​user_username, ²​possibly_sensitive, ³​conversation_id, ⁴​created_at, ⁵​author_id,
-## #   ⁶​in_reply_to_user_id, ⁷​user_name, ⁸​user_created_at, ⁹​user_location, ˟​user_verified, ˟​user_description
+##   tweet_id    user_…¹ text  possi…² conve…³ lang  source creat…⁴ autho…⁵ in_re…⁶
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+## 1 1577066499… cainsw… "RT … FALSE   157706… pt    Twitt… 2022-1… 809471… &lt;NA&gt;   
+## 2 1577066498… nandam… "RT … FALSE   157706… pt    Twitt… 2022-1… 422691… &lt;NA&gt;   
+## 3 1577066498… fran51… "RT … FALSE   157706… pt    Twitt… 2022-1… 133561… &lt;NA&gt;   
+## 4 1577066498… juliam… "RT … FALSE   157706… pt    Twitt… 2022-1… 839520… &lt;NA&gt;   
+## 5 1577066497… Comerc… "@Au… FALSE   157706… pt    Twitt… 2022-1… 155826… 152441…
+## 6 1577066497… caralh… "RT … FALSE   157706… pt    Twitt… 2022-1… 136448… &lt;NA&gt;   
+## # … with 21 more variables: user_name &lt;chr&gt;, user_created_at &lt;chr&gt;,
+## #   user_location &lt;chr&gt;, user_verified &lt;lgl&gt;, user_description &lt;chr&gt;,
+## #   user_protected &lt;lgl&gt;, user_pinned_tweet_id &lt;chr&gt;,
+## #   user_profile_image_url &lt;chr&gt;, user_url &lt;chr&gt;, retweet_count &lt;int&gt;,
+## #   like_count &lt;int&gt;, quote_count &lt;int&gt;, user_tweet_count &lt;int&gt;,
+## #   user_list_count &lt;int&gt;, user_followers_count &lt;int&gt;,
+## #   user_following_count &lt;int&gt;, sourcetweet_type &lt;chr&gt;, sourcetweet_id &lt;chr&gt;, …
 ## # ℹ Use `colnames()` to see all variable names
 ```
 
@@ -482,9 +492,65 @@ pacman::p_load(igraph)
 *net &lt;- graph.empty()
 
 # Add nodes
-*net &lt;- add.vertices(net,
+net &lt;- add.vertices(net, 
         length(unique(c(data))), # number of nodes
         name=as.character(unique(c(data)))) # unique names
+
+# Add edges
+net &lt;- add.edges(net, t(data)) 
+
+# summary
+summary(net)
+```
+]
+]
+---
+## Step 3: Create your network structure
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+
+```r
+pacman::p_load(igraph)
+
+# Create an empty network
+
+net &lt;- graph.empty() 
+
+# Add nodes
+*net &lt;- add.vertices(net,
+*       length(unique(c(data))), # number of nodes
+*       name=as.character(unique(c(data)))) # unique names
+
+# Add edges
+net &lt;- add.edges(net, t(data)) 
+
+# summary
+summary(net)
+```
+]
+]
+---
+## Step 3: Create your network structure
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+
+```r
+pacman::p_load(igraph)
+
+# Create an empty network
+
+net &lt;- graph.empty() 
+
+# Add nodes
+net &lt;- add.vertices(net, 
+        length(unique(c(data))), # number of nodes 
+        name=as.character(unique(c(data)))) # unique names 
 
 # Add edges
 *net &lt;- add.edges(net, t(data))
@@ -499,7 +565,7 @@ summary(net)
 
 
 ```
-## IGRAPH 3957c08 DN-- 79886 154583 -- 
+## IGRAPH 4afcf56 DN-- 79886 154583 -- 
 ## + attr: name (v/c)
 ```
 ]
@@ -539,21 +605,22 @@ entities
 
 ```
 ## # A tibble: 32,703 × 12
-##    tweet_id            start   end url                     expande…¹ displ…² media…³ images status title descr…⁴ unwou…⁵
-##    &lt;chr&gt;               &lt;int&gt; &lt;int&gt; &lt;chr&gt;                   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  
-##  1 1577066497746558976    73    96 https://t.co/N8FgdhRC6u https://… pic.tw… 7_1507… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  2 1577066495368400899    56    79 https://t.co/PKb704owqe https://… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  3 1577066494915014657    75    98 https://t.co/HJYJE64nOw https://… notici… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi… https:…
-##  4 1577066494508167169    77   100 https://t.co/5h9ToRjdog https://… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  5 1577066492159369216    62    85 https://t.co/Gg6wVTXNrJ https://… revist… &lt;NA&gt;    &lt;NULL&gt;    200 Zema… Govern… https:…
-##  6 1577066490603659264    99   122 https://t.co/TLUjIvNerQ https://… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  7 1577066489185587200    33    56 https://t.co/QzDhn0PyUf https://… pic.tw… 3_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  8 1577066488569430016    87   110 https://t.co/YYAvdoDVsG https://… pic.tw… 7_1558… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-##  9 1577066487465971713    95   118 https://t.co/KOJa1y78ft https://… uol.pa… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi… https:…
-## 10 1577066487420194817   243   266 https://t.co/beJb7NgXGw https://… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
-## # … with 32,693 more rows, and abbreviated variable names ¹​expanded_url, ²​display_url, ³​media_key, ⁴​description,
-## #   ⁵​unwound_url
-## # ℹ Use `print(n = ...)` to see more rows
+##    tweet…¹ start   end url   expan…² displ…³ media…⁴ images status title descr…⁵
+##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
+##  1 157706…    73    96 http… https:… pic.tw… 7_1507… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  2 157706…    56    79 http… https:… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  3 157706…    75    98 http… https:… notici… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi…
+##  4 157706…    77   100 http… https:… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  5 157706…    62    85 http… https:… revist… &lt;NA&gt;    &lt;NULL&gt;    200 Zema… Govern…
+##  6 157706…    99   122 http… https:… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  7 157706…    33    56 http… https:… pic.tw… 3_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  8 157706…    87   110 http… https:… pic.tw… 7_1558… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+##  9 157706…    95   118 http… https:… uol.pa… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi…
+## 10 157706…   243   266 http… https:… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;   
+## # … with 32,693 more rows, 1 more variable: unwound_url &lt;chr&gt;, and abbreviated
+## #   variable names ¹​tweet_id, ²​expanded_url, ³​display_url, ⁴​media_key,
+## #   ⁵​description
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 ]
 
@@ -580,13 +647,40 @@ tweets_tidy_rt &lt;- left_join(tweets_tidy_rt, tidy_entities)
 *E(net)$domain &lt;- tweets_tidy_rt$domain
 ```
 ]
+.panel[.panel-name[Domains]
+
+
+```r
+tweets_tidy_rt %&gt;%
+  janitor::tabyl(domain) %&gt;%
+* arrange(desc(n)) %&gt;%
+  drop_na(domain) %&gt;%
+  slice(1:10)
+```
+
+```
+##                   domain   n     percent valid_percent
+##  www.gazetadopovo.com.br 879 0.005686266    0.12913178
+##      noticias.uol.com.br 826 0.005343408    0.12134567
+##         revistaoeste.com 694 0.004489498    0.10195387
+##        veja.abril.com.br 603 0.003900817    0.08858528
+##  terrabrasilnoticias.com 562 0.003635587    0.08256207
+##      gazetabrasil.com.br 521 0.003370358    0.07653886
+##        www.brasil247.com 505 0.003266853    0.07418834
+##              twitter.com 216 0.001397308    0.03173204
+##     www.cnnbrasil.com.br 214 0.001384370    0.03143823
+##    www1.folha.uol.com.br 213 0.001377901    0.03129132
+```
+
+]
 
 .panel[.panel-name[Output]
 
 
 ```
-## IGRAPH 3957c08 DN-- 79886 154583 -- 
-## + attr: name (v/c), text (e/c), idauth (e/c), namehub (e/c), hash (e/x), domain (e/c)
+## IGRAPH 4afcf56 DN-- 79886 154583 -- 
+## + attr: name (v/c), text (e/c), idauth (e/c), namehub (e/c), hash
+## | (e/x), domain (e/c)
 ```
 ]
 ]
@@ -599,7 +693,7 @@ Two very common concepts in network science are in-degree and out-degree.
 
 - In-degree refers to how many links pointing to themselves the user has.
 
-- Out-degree means how many retweets the user has given.
+- Out-degree means how many edges originated at this user. 
 
 A user is called an authority when their in-degree is high. 
 
@@ -618,9 +712,9 @@ summary(net)
 ```
 
 ```
-## IGRAPH 3957c08 DN-- 79886 154583 -- 
-## + attr: name (v/c), outdegree (v/n), indegree (v/n), text (e/c), idauth (e/c), namehub (e/c), hash (e/x),
-## | domain (e/c)
+## IGRAPH 4afcf56 DN-- 79886 154583 -- 
+## + attr: name (v/c), outdegree (v/n), indegree (v/n), text (e/c), idauth
+## | (e/c), namehub (e/c), hash (e/x), domain (e/c)
 ```
 
 ---
@@ -693,6 +787,9 @@ comunidades&lt;- data_frame(membership=V(net)$membership)
 
 comunidades %&gt;% 
     count(membership) %&gt;% 
+    ungroup() %&gt;%
+    mutate(total=sum(n), 
+           prop_community=n/total) %&gt;%
     arrange(desc(n)) %&gt;%
     top_n(5)
 ```
@@ -783,6 +880,38 @@ users_most_retweets &lt;-authorities %&gt;%
 ```
 
 ]
+.panel[.panel-name[Outpute]
+
+
+```r
+# I will get only from the 100 most retweeted to save some time. 
+users_most_retweets
+```
+
+```
+## # A tibble: 30 × 16
+## # Groups:   membership [3]
+##    name          ind membe…¹ locat…² name1 verif…³ prote…⁴ entit…⁵ url   profi…⁶
+##    &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;lgl&gt;   &lt;list&gt;  &lt;chr&gt; &lt;chr&gt;  
+##  1 838099262    2480       4 Rio de… Patr… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  2 1404506222…  1549       4 &lt;NA&gt;    Cent… FALSE   FALSE   &lt;df&gt;    http… https:…
+##  3 65720380     1451       4 Rio de… Glau… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  4 1330082400…  1331       4 São Pa… Frot… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  5 31139434     1245       4 Curiti… Glei… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  6 57771039     1201       4 Santos… Rena… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  7 58288300     1065       4 São Pa… Gers… TRUE    FALSE   &lt;df&gt;    http… https:…
+##  8 1097073004…  1056       4 &lt;NA&gt;    Pedr… FALSE   FALSE   &lt;NULL&gt;  &lt;NA&gt;  https:…
+##  9 14594698     1014       4 Brasil  UOL … TRUE    FALSE   &lt;df&gt;    http… https:…
+## 10 16794066      872       4 &lt;NA&gt;    Blog… TRUE    FALSE   &lt;NULL&gt;  &lt;NA&gt;  https:…
+## # … with 20 more rows, 7 more variables: entities$description &lt;df[,2]&gt;,
+## #   description &lt;chr&gt;, created_at &lt;chr&gt;, username &lt;chr&gt;,
+## #   public_metrics &lt;df[,4]&gt;, id &lt;chr&gt;, pinned_tweet_id &lt;chr&gt;, and abbreviated
+## #   variable names ¹​membership, ²​location, ³​verified, ⁴​protected,
+## #   ⁵​entities$url$urls, ⁶​profile_image_url
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+```
+
+]
 ]
 
 ---
@@ -814,19 +943,19 @@ ggplot(users_most_retweets %&gt;%
 .panel[.panel-name[Community I]
 .center[
 
-&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-30-1.png" width="50%" /&gt;
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-22-1.png" width="50%" /&gt;
 ]
 ]
 
 .panel[.panel-name[Community II]
 .center[
 
-&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-31-1.png" width="50%" /&gt;
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-23-1.png" width="50%" /&gt;
 ]
 ]
 .panel[.panel-name[Community III]
 .center[
-&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-32-1.png" width="50%" /&gt;
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-24-1.png" width="50%" /&gt;
 ]
 ]
 ]
@@ -944,20 +1073,20 @@ glimpse(pelosi_network)
 ```
 ## Rows: 429
 ## Columns: 14
-## $ pinned_tweet_id   &lt;chr&gt; "1463532439456952323", "1422610928756043778", NA, NA, "1550123492179206145", "15088182890315…
-## $ url               &lt;chr&gt; "https://t.co/v695zCnmxN", "https://t.co/4xG26ktTyt", "http://t.co/wdwNk5MDgC", "https://t.c…
-## $ description       &lt;chr&gt; "Representative for Ohio’s Eleventh Congressional District.", "Proud to represent TX-09 in t…
-## $ profile_image_url &lt;chr&gt; "https://pbs.twimg.com/profile_images/1470758921426157573/femaCo6L_normal.jpg", "https://pbs…
-## $ id                &lt;chr&gt; "1456381091598700556", "156333623", "937801969", "1135486501", "1410590874", "305216911", "8…
-## $ public_metrics    &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
-## $ entities          &lt;df[,2]&gt; &lt;data.frame[40 x 2]&gt;
-## $ created_at        &lt;chr&gt; "2021-11-04T22:01:33.000Z", "2010-06-16T17:20:23.000Z", "2012-11-09T21:29:03.000Z", "2013…
-## $ username          &lt;chr&gt; "RepShontelBrown", "RepAlGreen", "RepJoeGarcia", "RepScottPeters", "PeterWelch", "RepBobb…
-## $ verified          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TR…
-## $ protected         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
-## $ name              &lt;chr&gt; "Rep. Shontel Brown", "Congressman Al Green", "Rep. Joe Garcia", "Rep. Scott Peters", "Rep. …
-## $ location          &lt;chr&gt; NA, "Houston, TX &amp; Washington, DC", "Miami, Florida", "San Diego, Poway, Coronado", "Vermont…
-## $ from_id           &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "1576464…
+## $ url               &lt;chr&gt; "https://t.co/v695zCnmxN", "https://t.co/4xG26ktTyt"…
+## $ protected         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
+## $ public_metrics    &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
+## $ description       &lt;chr&gt; "Representative for Ohio’s Eleventh Congressional…
+## $ verified          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+## $ created_at        &lt;chr&gt; "2021-11-04T22:01:33.000Z", "2010-06-16T17:20:23.000…
+## $ username          &lt;chr&gt; "RepShontelBrown", "RepAlGreen", "RepJoeGarcia", "Re…
+## $ id                &lt;chr&gt; "1456381091598700556", "156333623", "937801969", "11…
+## $ name              &lt;chr&gt; "Rep. Shontel Brown", "Congressman Al Green", "Rep. …
+## $ entities          &lt;df[,2]&gt; &lt;data.frame[26 x 2]&gt;
+## $ pinned_tweet_id   &lt;chr&gt; "1463532439456952323", "1422610928756043778", NA, NA…
+## $ profile_image_url &lt;chr&gt; "https://pbs.twimg.com/profile_images/14707589214…
+## $ location          &lt;chr&gt; NA, "Houston, TX &amp; Washington, DC", "Miami, Florida"…
+## $ from_id           &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "157…
 ```
 
 ---
@@ -980,7 +1109,7 @@ library(tweetscores)
 plot(results)
 ```
 
-&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-39-1.png" width="50%" /&gt;
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-31-1.png" width="50%" /&gt;
 ]
 ]
 ]
@@ -1009,21 +1138,21 @@ glimpse(pelosi_tl)
 ```
 ## Rows: 100
 ## Columns: 15
-## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Media Studio", "Twitter for iPhone", "Twitter for iPhone…
-## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
-## $ created_at             &lt;chr&gt; "2022-10-16T21:33:40.000Z", "2022-10-15T18:50:16.000Z", "2022-10-14T22:27:19.000Z", "20…
-## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
-## $ text                   &lt;chr&gt; ".@HouseGOP won’t stop at banning abortion in all 50 states. As they double down on …
-## $ context_annotations    &lt;list&gt; [&lt;data.frame[15 x 2]&gt;], [&lt;data.frame[8 x 2]&gt;], [&lt;data.frame[20 x 2]&gt;], [&lt;data.frame[18 …
-## $ id                     &lt;chr&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "1580690904544792…
-## $ entities               &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
-## $ edit_history_tweet_ids &lt;list&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "15806909045447925…
-## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", …
-## $ conversation_id        &lt;chr&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "1580690904544792…
-## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en…
-## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, […
-## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, NA, "15764644", NA, NA, "15764644", "15764644", "15764644", "15764644", NA,…
-## $ attachments            &lt;df[,1]&gt; &lt;data.frame[40 x 1]&gt;
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[7 x 2]&gt;], [&lt;data.frame[14 x 2]&gt;],…
+## $ referenced_tweets      &lt;list&gt; [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;,…
+## $ entities               &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
+## $ id                     &lt;chr&gt; "1582556778608218118", "1582492989015805953"…
+## $ text                   &lt;chr&gt; "Anna May Wong was a dazzling, trailblazing tal…
+## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Web App", "Twitt…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
+## $ conversation_id        &lt;chr&gt; "1582556778608218118", "1582492989015805953", "…
+## $ created_at             &lt;chr&gt; "2022-10-19T02:18:33.000Z", "2022-10-18T22:05:0…
+## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en",…
+## $ edit_history_tweet_ids &lt;list&gt; "1582556778608218118", "1582492989015805953", "…
+## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644"…
+## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
+## $ attachments            &lt;df[,1]&gt; &lt;data.frame[26 x 1]&gt;
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, "15764644", NA,…
 ```
 
 ---
@@ -1037,8 +1166,8 @@ glimpse(pelosi_tl)
 
 ```
 ## Processing 15764644
-## Total data points:  33 
-## Total data points:  34 
+## Total data points:  11 
+## Total data points:  12 
 ## This is the last page for  15764644 : finishing collection.
 ```
 
@@ -1047,24 +1176,24 @@ glimpse(pelosi_likes) # she mostly liked her own tweets
 ```
 
 ```
-## Rows: 34
+## Rows: 12
 ## Columns: 16
-## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Media Studio", "Twitter Web App", "Twitter Media Studio"…
-## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[34 x 4]&gt;
-## $ created_at             &lt;chr&gt; "2022-08-02T15:00:29.000Z", "2022-08-03T18:29:54.000Z", "2021-11-16T01:07:21.000Z", …
-## $ edit_history_tweet_ids &lt;list&gt; "1554482274430844928", "1554897362299981824", "1460414152778952707", "15723266259618201…
-## $ entities               &lt;df[,4]&gt; &lt;data.frame[34 x 4]&gt;
-## $ id                     &lt;chr&gt; "1554482274430844928", "1554897362299981824", "1460414152778952707", "1572326625961820…
-## $ conversation_id        &lt;chr&gt; "1554482274430844928", "1554897362299981824", "1460414146126696456", "15723266259618…
-## $ text                   &lt;chr&gt; "Our delegation’s visit to Taiwan honors America’s unwavering commitment to supporting …
-## $ context_annotations    &lt;list&gt; [&lt;data.frame[5 x 2]&gt;], [&lt;data.frame[9 x 2]&gt;], [&lt;data.frame[10 x 2]&gt;], [&lt;data.frame[9 x …
-## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en…
-## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…
-## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15…
-## $ attachments            &lt;df[,1]&gt; &lt;data.frame[34 x 1]&gt;
-## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], [&lt;data.fr…
-## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, "15764644", NA, NA, "15764644", "15764644", NA, "15764644", NA, NA, NA, NA, NA,…
-## $ from_id                &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", …
+## $ id                     &lt;chr&gt; "1230592378790129664", "819738961887264768", "8…
+## $ edit_history_tweet_ids &lt;list&gt; "1230592378790129664", "819738961887264768", "…
+## $ created_at             &lt;chr&gt; "2020-02-20T20:37:41.000Z", "2017-01-13T02:52:5…
+## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[12 x 4]&gt;
+## $ text                   &lt;chr&gt; "That moment when you hear @presmccartney sa…
+## $ entities               &lt;df[,4]&gt; &lt;data.frame[12 x 4]&gt;
+## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en",…
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[5 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, [&lt;dat…
+## $ author_id              &lt;chr&gt; "17025399", "281593711", "39547629", "774337933…
+## $ conversation_id        &lt;chr&gt; "1230592378790129664", "819738961887264768", "…
+## $ source                 &lt;chr&gt; "Buffer", "Twitter Web Client", "Twitter for iP…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
+## $ attachments            &lt;df[,1]&gt; &lt;data.frame[12 x 1]&gt;
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, "15764644", NA, NA, NA, NA, NA, NA,…
+## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], …
+## $ from_id                &lt;chr&gt; "15764644", "15764644", "15764644", "1576464…
 ```
 
 ---
@@ -1085,7 +1214,7 @@ See [here](https://tiagoventura.github.io/workshop_big_data_conference/presentat
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false,
-"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  </div>\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

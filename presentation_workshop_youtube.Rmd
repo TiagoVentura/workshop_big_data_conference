@@ -51,7 +51,7 @@ class:inverse, middle
 ---
 class:middle
 
-What I am presenting here follows very closely the [notebook](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) and [Python Library](https://pypi.org/project/youtube-data-api/) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU, and some other colleagues. 
+What I am presenting here follows very closely a [notebook](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) using the [Python Library youtube-data-api](https://pypi.org/project/youtube-data-api/) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU, and some other colleagues. 
 
 ---
 class: inverse, middle
@@ -97,12 +97,19 @@ pip install youtube-data-api
   
 ### A quick guide: [https://developers.google.com/youtube/v3/getting-started](https://developers.google.com/youtube/v3/getting-started)
   
-1. You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
+--
 
-2. Create a project in the <a href="https://console.developers.google.com/apis/">Google Developers Console</a> and <a href="https://developers.google.com/youtube/registering_an_application">obtain authorization credentials</a> so your application can submit API requests.
+- You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
 
-3. After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+--
 
+- Create a project in the <a href="https://console.developers.google.com/apis/">Google Developers Console</a> and <a href="https://developers.google.com/youtube/registering_an_application">obtain authorization credentials</a> so your application can submit API requests.
+
+--
+
+- After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+
+--
 ---
 ## Calling packages
   
