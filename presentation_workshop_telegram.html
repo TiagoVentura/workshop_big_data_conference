@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Collecting and Analyzing Social Media Data | Telegram Data  </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tiago Ventura | Center for Social Media and Politics | NYU" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# Collecting and Analyzing Social Media Data | Telegram Data <br>
+]
+.author[
+### Tiago Ventura | Center for Social Media and Politics | NYU
+]
+.date[
+### <span style="font-size: 70%;"> Big Data for Development and Governance <br> 10/21/2022 </span>
+]
+
+---
+
+
+
+
+
+
+## Introduction
+
+This notebook walks through some code in Python and R to download and clean data from Telegram. 
+
+Telegram has become a very important social media messaging app, particularly in the Global South, as an alternative to WhatsApp.
+
+To capture Telegram data, we will use the Python library [telethon](https://docs.telethon.dev/en/stable/index.html). This library provides an access to telegram API, from which you can grab information from channels using your account.
+
+---
+
+
+## Get your Telegram API credentials
+
+To connect to Telegram, we need an `api_id` and an `api_hash`. 
+
+-  you need to login to your [Telegram core](https://my.telegram.org/) 
+
+- Go to the [API development tools area](https://my.telegram.org/apps), and fill a request.
+
+- Here’s short [tutorial](https://core.telegram.org/api/obtaining_api_id) about how to get your API credentials.
+
+---
+
+## Installing Telethon
+
+
+
+```python
+#pip3 install telethon
+```
+
+
+---
+
+## APIs Keys
+
+Now, we will load our keys
+
+
+```python
+# call some libraries
+import os
+import datetime
+import pandas as pd
+from dotenv import load_dotenv
+
+# get the keys
+# load keys from  environmental var
+load_dotenv() # .env file in cwd
+```
+
+```
+## True
+```
+
+```python
+telegram_id= os.environ.get("telegram_id")
+telegram_hash= os.environ.get("telegram_hash")
+
+# also need your cellphone and username from telegram
+phone=os.environ.get("phone_number")
+username= os.environ.get("username")
+```
+
+---
+
+## Log in to Telegram
+
+Now everything is set up, we need to create a client and log in to our telegram account
+
+
+```python
+# call packages
+from telethon import TelegramClient
+from telethon.errors import SessionPasswordNeededError
+from telethon import sync
+
+
+# Create the client and connect
+def telegram_start(username, api_id, api_hash):
+  client = TelegramClient(username, api_id, api_hash)
+  client.start()
+  print("Client Created")
+  # Ensure you're authorized
+  if not client.is_user_authorized():
+      client.send_code_request(phone)
+      try:
+          client.sign_in(phone, input('Enter the code: '))
+      except SessionPasswordNeededError:
+          client.sign_in(password=input('Password: '))
+  return client        
+
+# Tun the function
+client = telegram_start(username, telegram_id, telegram_hash)
+```
+
+---
+
+### Getting Channel Members
+
+
+```python
+from telethon.tl.functions.channels import GetParticipantsRequest
+from telethon.tl.types import ChannelParticipantsSearch
+from telethon.tl.types import (PeerChannel)
+
+
+
+# Let's get members of the Lula Channel on Telegram
+*input_channel = "https://t.me/UrnasEletronicaseEleicoesBrasil"
+
+## Getting information from channel 
+*my_channel = client.get_entity(input_channel)
+```
+
+---
+### Getting Channel Members
+
+
+
+```python
+## get channel members
+offset = 0
+limit = 500
+all_participants = []
+
+while True:
+    participants = client(GetParticipantsRequest(
+        my_channel, ChannelParticipantsSearch(''), offset, limit,
+        hash=0
+    ))
+    if not participants.users:
+        break
+    all_participants.extend(participants.users)
+    offset += len(participants.users)
+
+
+# Open Json
+all_user_details = []
+for participant in all_participants:
+    all_user_details.append(
+        {"id": participant.id, "first_name": participant.first_name, "last_name": participant.last_name,
+         "user": participant.username, "phone": participant.phone, "is_bot": participant.bot})
+
+# Check it our
+df = pd.DataFrame(all_user_details)
+```
+
+---
+### Getting Channel Members
+
+.
+
+```python
+import pandas as pd
+df = pd.read_csv("data_telegram/user.csv",)
+df.keys()
+```
+
+```
+## Index(['id', 'first_name', 'last_name', 'user', 'phone', 'is_bot'], dtype='object')
+```
+
+```python
+df.head()
+```
+
+```
+##            id              first_name  ...         phone is_bot
+## 0   400651691  🇮🇹M̶i̶c̶h̶a̶e̶l̶🇮🇹⚫️⚪️  ...           NaN  False
+## 1  1370474841                M.DANTAS  ...           NaN  False
+## 2  1502201089           Sol de Macêdo  ...           NaN  False
+## 3  5155115949  Jane de Souza Han Liem  ...           NaN  False
+## 4    48774191                       T  ...  1.240703e+10  False
+## 
+## [5 rows x 6 columns]
+```
+
+---
+
+### Getting Messages
+
+
+
+```python
+from telethon.tl.functions.messages import (GetHistoryRequest)
+from telethon.tl.types import (PeerChannel)
+
+offset_id = 0
+limit = 1000
+all_messages = []
+total_messages = 0
+total_count_limit = 0
+
+# capture data
+history = client(GetHistoryRequest(
+        peer=my_channel,offset_id=offset_id,
+        offset_date=None,add_offset=0,
+        limit=limit,max_id=0,min_id=0,hash=0))
+    
+# get messages objects
+messages = history.messages
+
+# convert to a dictionary
+for message in messages:
+      all_messages.append(message.to_dict())
+
+# save json
+with open('data_telegram/message_data.json', 'w') as outfile:
+    json.dump(all_messages, outfile, indent=4, sort_keys=True, default=str)
+```
+
+
+---
+
+### Quick data cleaning
+
+```python
+import pandas as pd
+import json
+# convert to pandas
+# Opening JSON file
+f = open('data_telegram/message_data.json')
+  
+# returns JSON object as 
+# a dictionary
+data = json.load(f)
+ 
+df = pd.DataFrame(data)
+df.keys()
+```
+
+```
+## Index(['_', 'date', 'edit_date', 'edit_hide', 'entities', 'forwards',
+##        'from_id', 'from_scheduled', 'fwd_from', 'grouped_id', 'id', 'legacy',
+##        'media', 'media_unread', 'mentioned', 'message', 'noforwards', 'out',
+##        'peer_id', 'pinned', 'post', 'post_author', 'reactions', 'replies',
+##        'reply_markup', 'reply_to', 'restriction_reason', 'silent',
+##        'ttl_period', 'via_bot_id', 'views', 'action'],
+##       dtype='object')
+```
+
+---
+
+### Quick data cleaning
+
+
+```python
+# open nested lists
+df = pd.concat([df, df["from_id"].apply(pd.Series)], axis=1)
+
+# See
+df.head()
+```
+
+```
+##          _                       date  ...         _     user_id
+## 0  Message  2022-10-19 01:36:09+00:00  ...  PeerUser   400651691
+## 1  Message  2022-10-19 01:26:10+00:00  ...  PeerUser  1370474841
+## 2  Message  2022-10-19 01:02:19+00:00  ...  PeerUser  1502201089
+## 3  Message  2022-10-19 00:56:46+00:00  ...  PeerUser  1370474841
+## 4  Message  2022-10-19 00:55:24+00:00  ...  PeerUser  1370474841
+## 
+## [5 rows x 34 columns]
+```
+
+---
+class:middle
+
+### Conclusion
+
+This was a very introduction introduction. If you want to do this at scale, you need to 
+
+- Curate a list of channels you are interested in. 
+
+- Host this code in a server so that you can make multiple calls over the days. 
+
+- Use the async package to make this code more efficient. 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  </div>\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

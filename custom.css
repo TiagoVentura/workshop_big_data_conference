@@ -35,7 +35,12 @@
   padding-right: 4em;
   font-size: 0.8em;
 }
-
+.title-slide {
+  padding-left: 1em;
+  padding-right: 1em;
+  
+  
+}
 .title-slide h1 {
   font-size: 2.25em;
 }
@@ -70,17 +75,9 @@ div.my-footer span {
   width: 20%;
 }
 
-
-@import url(https://fonts.googleapis.com/css?family=Lato);
-@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
-
-body { font-family: 'Lato', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif; }
-h1, h2, h3 { font-family: 'Yanone Kaffeesatz';}
-
 .remark-code,.remark-inline-code {
   font-family: "Source Code Pro", "Lucida Console", monospace;
-  font-size: 80%;
+  font-size: 70%;
 }
 
 .remark-slide-number {
@@ -104,10 +101,6 @@ h1, h2, h3 { font-family: 'Yanone Kaffeesatz';}
 .red{
 color: #C93312;  
 }
-
-
-
-
 
 /*-- Custom classes for text emphasis --*/
 .blue       { color:  var(--Blue) }

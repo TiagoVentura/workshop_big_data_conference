@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Collecting and Analyzing Social Media Data </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tiago Ventura | Center for Social Media and Politics | NYU" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# Collecting and Analyzing Social Media Data<br>
+]
+.author[
+### Tiago Ventura | Center for Social Media and Politics | NYU
+]
+.date[
+### <span style="font-size: 70%;"> Big Data for Development and Governance <br> 10/21/2022 </span>
+]
+
+---
+
+
+
+
+
+name: about-me
+layout: false
+class: about-me-slide, inverse, middle, center
+
+
+## .red[About me]
+
+&lt;img style="border-radius: 40%;" src="./figs/tiago.jpg" width="150px"/&gt;
+
+### Tiago Ventura
+
+### Postdoc at Center for Social Media and Politics
+
+.fade[Incoming Assistant Professor, McCourt School, Georgetown University]
+
+[&lt;svg role="img" viewBox="0 0 24 24" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;title&gt;&lt;/title&gt;  &lt;path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"&gt;&lt;/path&gt;&lt;/svg&gt; @TiagoVentura_](https://twitter.com/_Tiagoventura)
+[&lt;svg role="img" viewBox="0 0 24 24" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;title&gt;&lt;/title&gt;  &lt;path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"&gt;&lt;/path&gt;&lt;/svg&gt; TiagoVentura](https://github.com/TiagoVentura)
+[&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;title&gt;&lt;/title&gt;  &lt;path d="M424,80H88a56.06,56.06,0,0,0-56,56V376a56.06,56.06,0,0,0,56,56H424a56.06,56.06,0,0,0,56-56V136A56.06,56.06,0,0,0,424,80Zm-14.18,92.63-144,112a16,16,0,0,1-19.64,0l-144-112a16,16,0,1,1,19.64-25.26L256,251.73,390.18,147.37a16,16,0,0,1,19.64,25.26Z"&gt;&lt;/path&gt;&lt;/svg&gt; venturat@umd.edu](venturat@umd.edu)
+[&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;title&gt;&lt;/title&gt;  &lt;path d="M208,352H144a96,96,0,0,1,0-192h64" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:36px"&gt;&lt;/path&gt;  &lt;path d="M304,160h64a96,96,0,0,1,0,192H304" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:36px"&gt;&lt;/path&gt;  &lt;line x1="163.29" y1="256" x2="350.71" y2="256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:36px"&gt;&lt;/line&gt;&lt;/svg&gt;https://tiagoventura.rbind.io/](https://venturatiago.com/)
+
+---
+class:middle
+
+## Plans for the Workshop
+
+
+--
+
+### Twitter Data
+
+- Collecting data using the Academic Access through [academictwitteR](https://github.com/cjbarrie/academictwitteR)  in R
+- Some bits of network analysis
+
+--
+
+### Youtube Data. 
+
+-  [Python Library](https://youtube-data-api.readthedocs.io/en/latest/youtube_api.html) developed by Megan Brown, Senior Engenieer at the Center for Social Media and Politics at NYU, and some other colleagues. 
+
+--
+
+### TikTok Data
+
+- [Python module](https://github.com/dfreelon/pyktok) developed by Dean Freelon and Colleagues to collect video, text, and metadata from Tiktok with no authentication required.
+
+--
+
+---
+class: middle
+
+# One-hour workshop
+
+.center[
+&lt;img src="figs/gif.gif" width="50%" /&gt;
+]
+
+---
+class: middle
+
+# Some assumptions
+
+--
+
+- Assume some knowledge of R and Python. 
+
+--
+
+- We will not go through authentication with Twitter and Youtube APIs (instructions are provided for you to go through it later)
+
+--
+
+- Particularly for Youtube and TikTok, I will just showcase others' people library to access data from these platforms.
+
+--
+
+---
+class:middle
+
+##  Logistics
+
+All materials are available in the Github repo for the workshop: [https://github.com/TiagoVentura/workshop_big_data_conference](https://github.com/TiagoVentura/workshop_big_data_conference). 
+
+You can just clone all the files from there. 
+
+More: 
+
+- Slides: [Twitter](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_telegram.html)
+
+- Notebooks:[Twitter](https://tiagoventura.github.io/workshop_big_data_conference/notebook_twitter.html), [Youtube](https://tiagoventura.github.io/workshop_big_data_conference/notebook_youtube.html), [Telegram](https://tiagoventura.github.io/workshop_big_data_conference/notebook_telegram.html)
+
+---
+class:inverse, middle
+
+# Gathering and Analyzing Twitter Data
+
+---
+class:middle
+
+## Getting Access to the Twitter APIs.
+
+--
+
+- [Apply for a Twitter developer account](https://developer.twitter.com/en/apply-for-access). 
+
+- [Apply to the academic research product track](https://developer.twitter.com/en/portal/petition/academic/is-it-right-for-you). 
+
+- Save your keys in a local file in your computer. 
+--
+
+---
+class:middle
+
+## Standard Access
+
+- Search for Tweets from the last 7 days.
+
+- Stream Tweets in real-time 
+
+- Get Tweets from a user’s timeline (up to 3200 most recent Tweets)
+
+- Build the full Tweet objects from a Tweet ID, or a set of Tweet IDs
+
+- Look up follower relationships
+
+---
+class:middle
+
+## Academic Research product track
+
+- Ability to get historical Tweets.
+
+- Cap of 10 million Tweets per month
+
+- More advanced filter options to return relevant data.
+
+---
+class:middle
+
+## Collecting Twitter Data
+
+--
+
+- **For R users:** [academictwitteR](https://github.com/cjbarrie/academictwitteR) package developed by Chris Barrie.
+
+- **For Python User:** check the library [Twarc](https://twarc-project.readthedocs.io/en/latest/). 
+
+
+
+---
+
+## Access tweets from the archive
+
+#### Load Packages
+
+```r
+# Call packages using pacman
+#install.packages("pacman")
+pacman::p_load(here, jsonlite, tidyverse, academictwitteR)
+```
+
+
+#### Add your API Key
+
+```r
+# Using Academic Twitter to add yourkey
+*set_bearer()
+```
+
+---
+class:middle
+
+## get_all_tweets
+
+
+
+```r
+# Using Academic Twitter to add yourkey
+# Collect data
+tweets &lt;-
+  get_all_tweets(
+*   query = "(eleicoes2022 OR lula OR bolsonaro OR ciro OR tebet)",
+    start_tweets = "2022-10-01T00:00:00Z", #start time
+    end_tweets = "2022-10-04T00:00:00Z", #end time
+    file = "br_elections", # file to save
+    data_path = "data_br/", # folder where all data as jsons will be stores
+    n = 200000, # number of tweets
+    lang = "pt"
+  )
+```
+
+---
+class:middle
+
+## get_all_tweets
+
+
+
+```r
+# Using Academic Twitter to add yourkey
+# Collect data
+tweets &lt;-
+  get_all_tweets(
+    query = "(eleicoes2022 OR lula OR bolsonaro OR ciro OR tebet)",  
+*   start_tweets = "2022-10-01T00:00:00Z", #start time
+*   end_tweets = "2022-10-04T00:00:00Z", #end time
+    file = "br_elections", # file to save
+    data_path = "data_br/", # folder where all data as jsons will be stores
+    n = 200000, # number of tweets
+    lang = "pt"
+  )
+```
+
+---
+class:middle
+
+## get_all_tweets
+
+
+
+```r
+# Using Academic Twitter to add yourkey
+# Collect data
+tweets &lt;-
+  get_all_tweets(
+    query = "(eleicoes2022 OR lula OR bolsonaro OR ciro OR tebet)", 
+    start_tweets = "2022-10-01T00:00:00Z", #start time
+    end_tweets = "2022-10-04T00:00:00Z", #end time
+    file = "br_elections", 
+*   data_path = "data_br/",
+    n = 200000, # number of tweets
+    lang = "pt"
+  )
+```
+
+---
+class:middle
+
+## get_all_tweets
+
+
+
+```r
+# Using Academic Twitter to add yourkey
+# Collect data
+tweets &lt;-
+  get_all_tweets(
+    query = "(eleicoes2022 OR lula OR bolsonaro OR ciro OR tebet)",  
+    start_tweets = "2022-10-01T00:00:00Z", #start time
+    end_tweets = "2022-10-04T00:00:00Z", #end time
+    file = "br_elections", # file to save
+    data_path = "data_br/", # folder where all data as jsons will be stores
+*   n = 200000,
+    lang = "pt"
+  )
+```
+
+
+---
+## What else?
+
+
+.center[
+&lt;img src="figs/acad_opt.png" width="60%" /&gt;
+]
+
+---
+## Where does the data live?
+
+.center[
+&lt;img src="figs/data_tw.png" width="80%" /&gt;
+]
+
+---
+## bind_tweets: tidy
+
+
+```r
+# data processing
+*tweets_tidy &lt;- bind_tweets("./data_br", output_format = "tidy")
+tweets_tidy
+```
+
+
+
+```
+## # A tibble: 6 × 31
+##   tweet_id    user_…¹ text  possi…² conve…³ lang  source creat…⁴ autho…⁵ in_re…⁶ user_…⁷ user_…⁸ user_…⁹ user_…˟ user_…˟
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;   &lt;chr&gt;  
+## 1 1577066499… cainsw… "RT … FALSE   157706… pt    Twitt… 2022-1… 809471… &lt;NA&gt;    felici… 2016-1… ⚠️ edtwt FALSE   "all I…
+## 2 1577066498… nandam… "RT … FALSE   157706… pt    Twitt… 2022-1… 422691… &lt;NA&gt;    Fernan… 2009-0… BH      FALSE   "Baixi…
+## 3 1577066498… fran51… "RT … FALSE   157706… pt    Twitt… 2022-1… 133561… &lt;NA&gt;    fran    2020-1… &lt;NA&gt;    FALSE   ""     
+## 4 1577066498… juliam… "RT … FALSE   157706… pt    Twitt… 2022-1… 839520… &lt;NA&gt;    LULA 1… 2017-0… konoha  FALSE   "Rael …
+## 5 1577066497… Comerc… "@Au… FALSE   157706… pt    Twitt… 2022-1… 155826… 152441… Heleni… 2022-0… &lt;NA&gt;    FALSE   ""     
+## 6 1577066497… caralh… "RT … FALSE   157706… pt    Twitt… 2022-1… 136448… &lt;NA&gt;    modesti 2010-0… &lt;NA&gt;    FALSE   "cidad…
+## # … with 16 more variables: user_protected &lt;lgl&gt;, user_pinned_tweet_id &lt;chr&gt;, user_profile_image_url &lt;chr&gt;,
+## #   user_url &lt;chr&gt;, retweet_count &lt;int&gt;, like_count &lt;int&gt;, quote_count &lt;int&gt;, user_tweet_count &lt;int&gt;,
+## #   user_list_count &lt;int&gt;, user_followers_count &lt;int&gt;, user_following_count &lt;int&gt;, sourcetweet_type &lt;chr&gt;,
+## #   sourcetweet_id &lt;chr&gt;, sourcetweet_text &lt;chr&gt;, sourcetweet_lang &lt;chr&gt;, sourcetweet_author_id &lt;chr&gt;, and abbreviated
+## #   variable names ¹​user_username, ²​possibly_sensitive, ³​conversation_id, ⁴​created_at, ⁵​author_id,
+## #   ⁶​in_reply_to_user_id, ⁷​user_name, ⁸​user_created_at, ⁹​user_location, ˟​user_verified, ˟​user_description
+## # ℹ Use `colnames()` to see all variable names
+```
+
+---
+
+## bind_tweets: json
+
+
+```r
+# examing the data
+tweets_raw &lt;- bind_tweets("./data_br", 
+*               output_format = "raw")
+str(tweets_raw, max.level=1)
+```
+
+
+```
+## List of 27
+##  $ tweet.entities.mentions            : tibble [215,630 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.entities.annotations         : tibble [386,283 × 6] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.entities.urls                : tibble [32,703 × 12] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.entities.hashtags            : tibble [10,405 × 4] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.entities.cashtags            : tibble [3 × 4] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.public_metrics.retweet_count : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.public_metrics.reply_count   : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.public_metrics.like_count    : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.public_metrics.quote_count   : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.attachments.media_keys       : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.attachments.poll_ids         : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.geo.place_id                 : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.geo.coordinates              : tibble [200,062 × 3] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.withheld.country_codes       : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.withheld.copyright           : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.edit_history_tweet_ids       : tibble [200,062 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.referenced_tweets            : tibble [184,799 × 3] (S3: tbl_df/tbl/data.frame)
+##  $ tweet.main                         :'data.frame':	200062 obs. of  9 variables:
+##  $ user.public_metrics.followers_count: tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.public_metrics.following_count: tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.public_metrics.tweet_count    : tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.public_metrics.listed_count   : tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.entities.url                  : tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.entities.description          : tibble [337,098 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ user.withheld.country_codes        : tibble [337,098 × 2] (S3: tbl_df/tbl/data.frame)
+##  $ user.main                          :'data.frame':	337098 obs. of  11 variables:
+##  $ sourcetweet.main                   :'data.frame':	132813 obs. of  16 variables:
+```
+---
+class:middle
+## Network Analysis with Twitter Data
+
+Many different ways you can analyze Twitter data: the text, the images, the geolocation, links, among many other things. 
+
+
+A popular way is to  to look at the user connections using some sort of network models.  Not limited to Twitter data. 
+
+
+A network has two core elements: nodes and edges. On Twitter this means:
+
+- Nodes are Twitter users
+
+- Edges are any sort of connections these users make. A reply, a friendship, or the most common, a retweet. 
+
+[igraph](https://igraph.org/r/) package to analyze network data in R. 
+
+---
+class:middle, inverse
+
+## Intro to  Network Analysis in R
+
+---
+
+### Step 1: Filter Nodes
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```r
+# Filter retweets
+tweets_tidy_rt &lt;- tweets_tidy %&gt;%
+*                 filter(!is.na(sourcetweet_type))
+
+# Visualize the dta
+tweets_tidy_rt %&gt;%
+  select(user_username,
+  sourcetweet_author_id) %&gt;%
+  head()
+```
+]
+.panel[.panel-name[Output]
+
+
+```
+## # A tibble: 6 × 2
+##   user_username   sourcetweet_author_id
+##   &lt;chr&gt;           &lt;chr&gt;                
+## 1 cainsworts      1534722153819643906  
+## 2 nandamattosbh   18880621             
+## 3 fran51995877    26752656             
+## 4 juliam3ndes     863806721696858112   
+## 5 caralho_modesti 2876592790           
+## 6 carolfcarneiro  44481447
+```
+]
+]
+
+---
+
+## Step 2: Create a edge list
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```r
+# Create a edge list 
+*data &lt;- cbind(tweets_tidy_rt$author_id,
+*       tweets_tidy_rt$sourcetweet_author_id)
+```
+]
+
+.panel[.panel-name[Output]
+
+
+```
+##      [,1]                  [,2]                 
+## [1,] "809471355116781568"  "1534722153819643906"
+## [2,] "42269111"            "18880621"           
+## [3,] "1335618427852124163" "26752656"           
+## [4,] "839520909807521793"  "863806721696858112" 
+## [5,] "136448124"           "2876592790"         
+## [6,] "108719485"           "44481447"
+```
+]
+]
+---
+
+## Step 3: Create your network structure
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+
+```r
+pacman::p_load(igraph)
+
+# Create an empty network
+
+*net &lt;- graph.empty()
+
+# Add nodes
+*net &lt;- add.vertices(net,
+        length(unique(c(data))), # number of nodes
+        name=as.character(unique(c(data)))) # unique names
+
+# Add edges
+*net &lt;- add.edges(net, t(data))
+
+# summary
+summary(net)
+```
+]
+
+.panel[.panel-name[Output]
+
+
+
+```
+## IGRAPH 3957c08 DN-- 79886 154583 -- 
+## + attr: name (v/c)
+```
+]
+]
+---
+
+## Step four: Add information to your network object
+
+
+Edge level (`E(object)`)  or  Node leve (`V(object)`). 
+
+.panelset[
+.panel[.panel-name[Code]
+
+```r
+library(urltools)
+
+# Edges 
+*E(net)$text &lt;- tweets_tidy_rt$text
+*E(net)$idauth &lt;- tweets_tidy_rt$sourcetweet_author_id
+*E(net)$namehub &lt;- tweets_tidy_rt$user_username
+
+
+# Capturing hashtags
+E(net)$hash &lt;- str_extract_all(tweets_tidy_rt$text,
+                               "#\\S+")
+```
+]
+.panel[.panel-name[Accessing the raw]
+
+
+```r
+# grab expanded and unwound_url
+*entities &lt;- tweets_raw$tweet.entities.urls
+entities 
+```
+
+```
+## # A tibble: 32,703 × 12
+##    tweet_id            start   end url                     expande…¹ displ…² media…³ images status title descr…⁴ unwou…⁵
+##    &lt;chr&gt;               &lt;int&gt; &lt;int&gt; &lt;chr&gt;                   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;list&gt;  &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  
+##  1 1577066497746558976    73    96 https://t.co/N8FgdhRC6u https://… pic.tw… 7_1507… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  2 1577066495368400899    56    79 https://t.co/PKb704owqe https://… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  3 1577066494915014657    75    98 https://t.co/HJYJE64nOw https://… notici… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi… https:…
+##  4 1577066494508167169    77   100 https://t.co/5h9ToRjdog https://… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  5 1577066492159369216    62    85 https://t.co/Gg6wVTXNrJ https://… revist… &lt;NA&gt;    &lt;NULL&gt;    200 Zema… Govern… https:…
+##  6 1577066490603659264    99   122 https://t.co/TLUjIvNerQ https://… pic.tw… 7_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  7 1577066489185587200    33    56 https://t.co/QzDhn0PyUf https://… pic.tw… 3_1577… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  8 1577066488569430016    87   110 https://t.co/YYAvdoDVsG https://… pic.tw… 7_1558… &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+##  9 1577066487465971713    95   118 https://t.co/KOJa1y78ft https://… uol.pa… &lt;NA&gt;    &lt;df&gt;      200 Perf… Com vi… https:…
+## 10 1577066487420194817   243   266 https://t.co/beJb7NgXGw https://… twitte… &lt;NA&gt;    &lt;NULL&gt;     NA &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   
+## # … with 32,693 more rows, and abbreviated variable names ¹​expanded_url, ²​display_url, ³​media_key, ⁴​description,
+## #   ⁵​unwound_url
+## # ℹ Use `print(n = ...)` to see more rows
+```
+]
+
+.panel[.panel-name[Capturing Domains]
+
+
+```r
+## Capturing domains
+tidy_entities &lt;- entities %&gt;% 
+                    # get columns we need
+                    select(tweet_id, unwound_url) %&gt;% 
+                    #extract domains
+                    mutate(unwound_url=domain(unwound_url)) %&gt;%
+                    # remove nas and 
+                    # combine multiple links
+                    filter(!is.na(unwound_url)) %&gt;%
+                    group_by(tweet_id) %&gt;%
+*                   summarise(domain=paste0(unwound_url, collapse=" -- "))
+
+# Merge back with id
+tweets_tidy_rt &lt;- left_join(tweets_tidy_rt, tidy_entities)
+
+# add to the network
+*E(net)$domain &lt;- tweets_tidy_rt$domain
+```
+]
+
+.panel[.panel-name[Output]
+
+
+```
+## IGRAPH 3957c08 DN-- 79886 154583 -- 
+## + attr: name (v/c), text (e/c), idauth (e/c), namehub (e/c), hash (e/x), domain (e/c)
+```
+]
+]
+
+---
+class: middle
+## Network Statistics, Communities and Layout
+
+Two very common concepts in network science are in-degree and out-degree. 
+
+- In-degree refers to how many links pointing to themselves the user has.
+
+- Out-degree means how many retweets the user has given.
+
+A user is called an authority when their in-degree is high. 
+
+- A user is called a hub when its out-degree is high, as this user retweets very often.
+
+---
+class: middle
+
+## Degree Statistics
+
+```r
+# Calculate in degree and out degree
+*V(net)$outdegree&lt;-degree(net, mode="out")
+*V(net)$indegree&lt;-degree(net, mode="in")
+summary(net)
+```
+
+```
+## IGRAPH 3957c08 DN-- 79886 154583 -- 
+## + attr: name (v/c), outdegree (v/n), indegree (v/n), text (e/c), idauth (e/c), namehub (e/c), hash (e/x),
+## | domain (e/c)
+```
+
+---
+class: middle
+### Layout
+
+
+```r
+*l &lt;- layout_with_fr(net, grid = c("nogrid"))
+#saveRDS(l, "layout.rds")
+head(l)
+```
+
+
+```
+##            [,1]       [,2]
+## [1,] -102.96401  216.91269
+## [2,] -178.82523  158.25089
+## [3,]   52.34920   81.01076
+## [4,]  -11.32539 -139.13169
+## [5,]   51.89335  -56.94802
+## [6,]   29.44408  -99.62837
+```
+
+---
+class: middle
+
+### Communities
+
+
+
+```r
+*my.com.fast &lt;- walktrap.community(net)
+str(my.com.fast, max.level = 1)
+```
+
+
+```
+## Class 'communities'  hidden list of 6
+##  $ merges    : num [1:77186, 1:2] 58675 61627 60095 58720 58731 ...
+##  $ modularity: num [1:79886] 0 -0.00127 -0.00127 -0.00126 -0.00125 ...
+##  $ membership: num [1:79886] 1689 2004 11 169 175 ...
+##  $ names     : chr [1:79886] "809471355116781568" "42269111" "1335618427852124163" "839520909807521793" ...
+##  $ vcount    : int 79886
+##  $ algorithm : chr "walktrap"
+```
+
+---
+class: middle
+
+## Add the layout and membership to your igraph object. 
+
+
+```r
+*V(net)$l1 &lt;- l[,1]
+*V(net)$l2 &lt;- l[,2]
+*V(net)$membership &lt;- my.com.fast$membership
+```
+
+---
+
+## What are the largest communities?
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```r
+comunidades&lt;- data_frame(membership=V(net)$membership)
+
+comunidades %&gt;% 
+    count(membership) %&gt;% 
+    arrange(desc(n)) %&gt;%
+    top_n(5)
+```
+
+]
+
+.panel[.panel-name[Output]
+
+
+```
+## # A tibble: 5 × 2
+##   membership     n
+##        &lt;dbl&gt; &lt;int&gt;
+## 1         11 18272
+## 2          4 18077
+## 3          8  7951
+## 4         13  2923
+## 5          2  1165
+```
+
+]
+]
+
+---
+
+## Who are the main authorities in each community?
+
+.panelset[
+.panel[.panel-name[Code]
+
+
+```r
+# Create an datafram for the authoritiew
+*authorities &lt;- data_frame(name=V(net)$name,
+*               ind=V(net)$indegree,
+*               membership=V(net)$membership) %&gt;%
+                filter(membership==11| 
+                       membership==4|
+                       membership==8) %&gt;%
+                group_by(membership) %&gt;%
+                arrange(desc(ind)) %&gt;% 
+                slice(1:10)
+```
+]
+
+.panel[.panel-name[Authorities names]
+
+
+```r
+# I will get only from the 100 most retweeted to save some time. 
+users_most_retweets &lt;-authorities %&gt;%
+                      mutate(data_user=map(name,
+*                            get_user_profile)) %&gt;%
+                      unnest()
+```
+
+```
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+## Processing from 1 to 1
+```
+
+]
+]
+
+---
+## Who are the main authorities in each community?
+
+.panelset[
+.panel[.panel-name[ggplot code]
+
+
+```r
+# Main Communities
+ggplot(users_most_retweets %&gt;% 
+*        filter(membership=="4"),
+         aes(x=reorder(username,
+                ind,
+             fill=membership),
+                     y=ind)) + 
+    geom_histogram(stat="identity", width=.5, color="black") +
+    coord_flip() +
+    xlab("") + ylab("") + 
+    theme_minimal(base_size = 12) + 
+    theme(plot.title = element_text(size = 22, face = "bold"), 
+          axis.title=element_text(size=16), 
+          axis.text = element_text(size=12, face="bold")) +
+    facet_grid(~membership)
+```
+]
+
+.panel[.panel-name[Community I]
+.center[
+
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-30-1.png" width="50%" /&gt;
+]
+]
+
+.panel[.panel-name[Community II]
+.center[
+
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-31-1.png" width="50%" /&gt;
+]
+]
+.panel[.panel-name[Community III]
+.center[
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-32-1.png" width="50%" /&gt;
+]
+]
+]
+
+---
+
+## Visualizing communities
+
+.panelset[
+.panel[.panel-name[Function to Plot Network]
+
+```r
+# A function with the density. Nice to visualize as well.
+my.den.plot &lt;- function(l=l,new.color=new.color, ind=ind, legend, color){
+  library(KernSmooth)
+  est &lt;- bkde2D(l, bandwidth=c(10, 10))
+  plot(l,cex=log(ind+1)/4, col=new.color, pch=16, xlim=c(-160,140),ylim=c(-140,160), xlab="", ylab="", axes=FALSE)
+   legend("topright", c(legend[1],legend[2], legend[3]), pch = 17:19, col=c(color[1], color[2], color[3]))
+  contour(est$x1, est$x2, est$fhat,  col = gray(.6), add=TRUE)
+} 
+```
+]
+
+.panel[.panel-name[Function to Plot Network]
+
+
+```r
+# Colors for each community
+
+# Building a empty containes
+temp &lt;- rep(1,length(V(net)$membership))
+new.color &lt;- "white"
+*new.color[V(net)$membership==11] &lt;- "Yellow"
+*new.color[V(net)$membership==8] &lt;- "pink"
+*new.color[V(net)$membership==4] &lt;- "red"
+
+# Add color
+V(net)$new.color &lt;- new.color
+```
+]
+
+.panel[.panel-name[Network Plot]
+
+![](presentation_workshop_twitter_files/figure-html/net_plot_-1.png)&lt;!-- --&gt;
+]
+]
+
+---
+## Hashtags by communities
+
+.center[
+
+]
+
+.center[
+&lt;img src="figs/hashtags.png" width="100%" /&gt;
+]
+
+---
+## Sharing news on Twitter
+
+.footnote[From [News Sharing, Gatekeeping, and Polarization: A Study of the #Bolsonaro Election](https://www.tandfonline.com/doi/full/10.1080/21670811.2020.1852094)]
+
+
+.center[
+&lt;img src="figs/sharing_news.jpeg" width="60%" /&gt;
+]
+
+---
+
+class:middle
+
+## Other APIs endpoints
+
+Most of our work with the Twitter API happens with the capacity to query the API with search terms. For this reason, the search (and filter for live data collection) endpoints are the most popular. 
+
+However, there are a few other endpoints from the Twitter API that can also be very useful for research puporses. Let's walk through them briefly. 
+
+
+---
+## Getting user id
+
+Imagine a research in which you have the Twitter accounts of elites, and you want to collect their Twitter data. The first step is to collect their ids. 
+
+
+```r
+# getting some Twitter Ids
+*pelosi &lt;- get_user_id("SpeakerPelosi")
+pelosi
+```
+
+```
+## SpeakerPelosi 
+##    "15764644"
+```
+
+---
+## Getting whom a user follows
+
+
+```r
+*pelosi_network &lt;- get_user_following(pelosi)
+```
+
+```
+## Processing 15764644
+## Total data points:  429 
+## This is the last page for  15764644 : finishing collection.
+```
+
+```r
+glimpse(pelosi_network)
+```
+
+```
+## Rows: 429
+## Columns: 14
+## $ pinned_tweet_id   &lt;chr&gt; "1463532439456952323", "1422610928756043778", NA, NA, "1550123492179206145", "15088182890315…
+## $ url               &lt;chr&gt; "https://t.co/v695zCnmxN", "https://t.co/4xG26ktTyt", "http://t.co/wdwNk5MDgC", "https://t.c…
+## $ description       &lt;chr&gt; "Representative for Ohio’s Eleventh Congressional District.", "Proud to represent TX-09 in t…
+## $ profile_image_url &lt;chr&gt; "https://pbs.twimg.com/profile_images/1470758921426157573/femaCo6L_normal.jpg", "https://pbs…
+## $ id                &lt;chr&gt; "1456381091598700556", "156333623", "937801969", "1135486501", "1410590874", "305216911", "8…
+## $ public_metrics    &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
+## $ entities          &lt;df[,2]&gt; &lt;data.frame[40 x 2]&gt;
+## $ created_at        &lt;chr&gt; "2021-11-04T22:01:33.000Z", "2010-06-16T17:20:23.000Z", "2012-11-09T21:29:03.000Z", "2013…
+## $ username          &lt;chr&gt; "RepShontelBrown", "RepAlGreen", "RepJoeGarcia", "RepScottPeters", "PeterWelch", "RepBobb…
+## $ verified          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ protected         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…
+## $ name              &lt;chr&gt; "Rep. Shontel Brown", "Congressman Al Green", "Rep. Joe Garcia", "Rep. Scott Peters", "Rep. …
+## $ location          &lt;chr&gt; NA, "Houston, TX &amp; Washington, DC", "Miami, Florida", "San Diego, Poway, Coronado", "Vermont…
+## $ from_id           &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "1576464…
+```
+
+---
+
+## Estimate user ideology
+.panelset[
+.panel[.panel-name[Code]
+
+
+```r
+#devtools::install_github("pablobarbera/twitter_ideology/pkg/tweetscores")
+library(tweetscores)
+*results &lt;- estimateIdeology("SpeakerPelosi", pelosi_network$id, verbose = FALSE)
+```
+]
+.panel[.panel-name[Output]
+.center[
+
+```r
+plot(results)
+```
+
+&lt;img src="presentation_workshop_twitter_files/figure-html/unnamed-chunk-39-1.png" width="50%" /&gt;
+]
+]
+]
+
+---
+## User timeline
+
+
+```r
+pelosi_tl = get_user_timeline(pelosi, 
+*                             start_tweets = "2022-01-01T00:00:00Z",
+*                              end_tweets = "2022-10-22T00:00:00Z",
+                              n=100) #limit
+```
+
+```
+## user:  15764644 
+## Total pages queried: 1 (tweets captured this page: 100).
+## Total tweets captured now reach 100 : finishing collection.
+```
+
+```r
+glimpse(pelosi_tl)
+```
+
+```
+## Rows: 100
+## Columns: 15
+## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Media Studio", "Twitter for iPhone", "Twitter for iPhone…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
+## $ created_at             &lt;chr&gt; "2022-10-16T21:33:40.000Z", "2022-10-15T18:50:16.000Z", "2022-10-14T22:27:19.000Z", "20…
+## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
+## $ text                   &lt;chr&gt; ".@HouseGOP won’t stop at banning abortion in all 50 states. As they double down on …
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[15 x 2]&gt;], [&lt;data.frame[8 x 2]&gt;], [&lt;data.frame[20 x 2]&gt;], [&lt;data.frame[18 …
+## $ id                     &lt;chr&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "1580690904544792…
+## $ entities               &lt;df[,4]&gt; &lt;data.frame[40 x 4]&gt;
+## $ edit_history_tweet_ids &lt;list&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "15806909045447925…
+## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", …
+## $ conversation_id        &lt;chr&gt; "1581760310901608448", "1581356803073490944", "1581049035548348418", "1580690904544792…
+## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en…
+## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, […
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, NA, "15764644", NA, NA, "15764644", "15764644", "15764644", "15764644", NA,…
+## $ attachments            &lt;df[,1]&gt; &lt;data.frame[40 x 1]&gt;
+```
+
+---
+
+## Tweets liked by an user
+
+
+```r
+*pelosi_likes = get_liked_tweets(pelosi)
+```
+
+```
+## Processing 15764644
+## Total data points:  33 
+## Total data points:  34 
+## This is the last page for  15764644 : finishing collection.
+```
+
+```r
+glimpse(pelosi_likes) # she mostly liked her own tweets
+```
+
+```
+## Rows: 34
+## Columns: 16
+## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Media Studio", "Twitter Web App", "Twitter Media Studio"…
+## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[34 x 4]&gt;
+## $ created_at             &lt;chr&gt; "2022-08-02T15:00:29.000Z", "2022-08-03T18:29:54.000Z", "2021-11-16T01:07:21.000Z", …
+## $ edit_history_tweet_ids &lt;list&gt; "1554482274430844928", "1554897362299981824", "1460414152778952707", "15723266259618201…
+## $ entities               &lt;df[,4]&gt; &lt;data.frame[34 x 4]&gt;
+## $ id                     &lt;chr&gt; "1554482274430844928", "1554897362299981824", "1460414152778952707", "1572326625961820…
+## $ conversation_id        &lt;chr&gt; "1554482274430844928", "1554897362299981824", "1460414146126696456", "15723266259618…
+## $ text                   &lt;chr&gt; "Our delegation’s visit to Taiwan honors America’s unwavering commitment to supporting …
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[5 x 2]&gt;], [&lt;data.frame[9 x 2]&gt;], [&lt;data.frame[10 x 2]&gt;], [&lt;data.frame[9 x …
+## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en", "en…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…
+## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15…
+## $ attachments            &lt;df[,1]&gt; &lt;data.frame[34 x 1]&gt;
+## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], [&lt;data.fr…
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, "15764644", NA, NA, "15764644", "15764644", NA, "15764644", NA, NA, NA, NA, NA,…
+## $ from_id                &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", "15764644", …
+```
+
+---
+class:inverse, middle
+
+# Question?
+
+---
+class:inverse, middle
+
+## That's a wrap for Twitter data
+
+See [here](https://tiagoventura.github.io/workshop_big_data_conference/presentation_workshop_youtube.html) the link for the Youtube slides
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+---
+title: "Workshop Analyzing Social Media Data | Telegram Data"
+author: "Tiago Ventura"
+date: "10/21/2020"
+toc: true
+format:
+  html:
+    theme: cosmo
+    html-math-method: katex
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+  message: false
+  error: false
+editor_options: 
+  chunk_output_type: console
+---
+
+## Introduction
+
+This notebook walks through some code in Python and R to download and clean data from Telegram.
+
+Telegram has become a very important social media messaging App, particularly in the Global South. What makes Telegram unique, particularly compared to WhatsApp, is the reluctance of the company to comply with content moderation policies determined by local governments.
+
+For this reason, Telegram has become an platform marked by the circulation of extremely polarizing content, misinformation rumors, and the organization of harmful groups.
+
+To capture Telegram data, we will use the Python library [telethon](https://docs.telethon.dev/en/stable/index.html). This library provides an access to telegram API, from which you can grab information from channels using your account.
+
+The code I present below is inspired by this [medium post](https://betterprogramming.pub/how-to-get-data-from-telegram-82af55268a4b).
+
+## Get your Telegram API credentials
+
+To connect to Telegram, we need an `api_id` and an `api_hash`.
+
+To get those, you need to login to your [Telegram core](https://my.telegram.org/) and go to the [API development tools area](https://my.telegram.org/apps).
+
+Here's short [tutorial](https://core.telegram.org/api/obtaining_api_id) about how to get your API credentials.
+
+## Installing Telethon
+
+First step is to install the python library
+
+```{python}
+#| eval: false
+
+#pip3 install telethon
+
+```
+
+## APIs Keys
+
+Now, we will load our keys
+
+```{python}
+# call some libraries
+import os
+import datetime
+import pandas as pd
+from dotenv import load_dotenv
+import json
+
+# get the keys
+# load keys from  environmental var
+load_dotenv() # .env file in cwd
+telegram_id= os.environ.get("telegram_id")
+telegram_hash= os.environ.get("telegram_hash")
+
+# also need your cellphone and username from telegram
+phone=os.environ.get("phone_number")
+username= os.environ.get("username")
+username
+
+```
+
+## Log in to Telegram
+
+Now everything is set up, we need to create a client and log in to our telegram account
+
+```{python}
+#| eval: false
+
+# call packages
+from telethon import TelegramClient
+from telethon.errors import SessionPasswordNeededError
+from telethon import sync
+
+
+# Create the client and connect
+def telegram_start(username, api_id, api_hash):
+  client = TelegramClient(username, api_id, api_hash)
+  client.start()
+  print("Client Created")
+  # Ensure you're authorized
+  if not client.is_user_authorized():
+      client.send_code_request(phone)
+      try:
+          client.sign_in(phone, input('Enter the code: '))
+      except SessionPasswordNeededError:
+          client.sign_in(password=input('Password: '))
+  return client        
+
+# Tun the function
+client = telegram_start(username, telegram_id, telegram_hash)
+
+```
+
+### Getting Channel Members
+
+```{python}
+#| eval: false
+from telethon.tl.functions.channels import GetParticipantsRequest
+from telethon.tl.types import ChannelParticipantsSearch
+from telethon.tl.types import (PeerChannel)
+
+# Let's get members of the Lula Channel on Telegram
+input_channel = "https://t.me/UrnasEletronicaseEleicoesBrasil"
+
+## Getting information from channel 
+my_channel = client.get_entity(input_channel)
+
+## get channel members
+offset = 0
+limit = 500
+all_participants = []
+
+while True:
+    participants = client(GetParticipantsRequest(
+        my_channel, ChannelParticipantsSearch(''), offset, limit,
+        hash=0
+    ))
+    if not participants.users:
+        break
+    all_participants.extend(participants.users)
+    offset += len(participants.users)
+
+
+
+# Open Json
+all_user_details = []
+for participant in all_participants:
+    all_user_details.append(
+        {"id": participant.id, "first_name": participant.first_name, "last_name": participant.last_name,
+         "user": participant.username, "phone": participant.phone, "is_bot": participant.bot})
+
+# Check it our
+df = pd.DataFrame(all_user_details)
+```
+
+```{python}
+#| echo: false
+
+```
+
+### Getting Messages
+
+This only gets you 100 messages. You need to wrap it in a loop to get all the messages in the chat.
+
+```{python}
+#| eval: false
+
+from telethon.tl.functions.messages import (GetHistoryRequest)
+from telethon.tl.types import (PeerChannel)
+import json
+
+offset_id = 0
+limit = 1000
+all_messages = []
+total_messages = 0
+total_count_limit = 0
+
+# capture data
+history = client(GetHistoryRequest(
+        peer=my_channel,
+        offset_id=offset_id,
+        offset_date=None,
+        add_offset=0,
+        limit=limit,
+        max_id=0,
+        min_id=0,
+        hash=0
+    ))
+    
+# get messages objects
+messages = history.messages
+
+# convert to a dictionary
+for message in messages:
+      all_messages.append(message.to_dict())
+
+# save json
+with open('data_telegram/message_data.json', 'w') as outfile:
+    json.dump(all_messages, outfile, indent=4, sort_keys=True, default=str)
+
+```
+
+### Quick data cleaning
+
+```{python}
+# convert to pandas
+# Opening JSON file
+f = open('data_telegram/message_data.json')
+  
+# returns JSON object as 
+# a dictionary
+data = json.load(f)
+ 
+df = pd.DataFrame(data)
+df.keys()
+```
+
+```{python}
+# open nested lists
+df = pd.concat([df, df["from_id"].apply(pd.Series)], axis=1)
+
+# See
+df.head()
+
+```
+
+### Conclusion
+
+This is a very quick introduction. If you want to do this at scale, you need to first curate a list of channels you are interested in. Second, you need to host this code in a server so that you can make multiple calls over the days. Third, you probably need to use the async package to make this code more efficient.

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Collecting and Analyzing Social Media Data </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tiago Ventura | Center for Social Media and Politics | NYU" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# Collecting and Analyzing Social Media Data<br>
+]
+.author[
+### Tiago Ventura | Center for Social Media and Politics | NYU
+]
+.date[
+### <span style="font-size: 70%;"> Big Data for Development and Governance <br> 10/21/2022 </span>
+]
+
+---
+
+
+
+
+
+
+class:inverse, middle
+
+# Collecting and Analyzing Youtube Data
+
+---
+class:middle
+
+What I am presenting here follows very closely the [notebook](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) and [Python Library](https://pypi.org/project/youtube-data-api/) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU, and some other colleagues. 
+
+---
+class: inverse, middle
+
+# Thanks Megan!
+  
+---
+class:middle
+
+## What kind of data can you get from the Youtube API?
+
+Youtube has a very extensive api. There are a lot of data you can get access to. 
+
+See a comprehensive list [here](https://developers.google.com/youtube/v3/docs/)
+
+What is included in the package:
+  
+- video metadata
+
+- channel metadata
+
+- playlist metadata
+
+- subscription metadata
+
+- featured channel metadata
+
+- comment metadata
+
+- search results
+
+---
+## Installing
+  
+
+```python
+# run in the command line 
+pip install youtube-data-api
+```
+
+---
+  
+## How to get an API key
+  
+### A quick guide: [https://developers.google.com/youtube/v3/getting-started](https://developers.google.com/youtube/v3/getting-started)
+  
+1. You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
+
+2. Create a project in the &lt;a href="https://console.developers.google.com/apis/"&gt;Google Developers Console&lt;/a&gt; and &lt;a href="https://developers.google.com/youtube/registering_an_application"&gt;obtain authorization credentials&lt;/a&gt; so your application can submit API requests.
+
+3. After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+
+---
+## Calling packages
+  
+
+```python
+# call some libraries
+import os
+import datetime
+import pandas as pd
+pd.set_option('display.max_columns', None)
+```
+
+
+```python
+# pass your keys
+from youtube_api import YouTubeDataAPI
+from youtube_api.youtube_api_utils import *
+from dotenv import load_dotenv
+
+# load keys from  environmental var
+load_dotenv() # .env file in cwd
+```
+
+```
+## True
+```
+
+```python
+*api_key = os.environ.get("YT_KEY")
+```
+
+---
+  
+## Create a Python Client to interact with the API
+
+
+```python
+# create a client
+*yt = YouTubeDataAPI(api_key)
+```
+
+---
+  
+## Starting with a Channel
+  
+Let's start with the `LastWeekTonight` channel
+
+[https://www.youtube.com/user/LastWeekTonight](https://www.youtube.com/user/LastWeekTonight)
+
+First we need to get the channel id
+
+
+```python
+*channel_id = yt.get_channel_id_from_user('LastWeekTonight')
+print(channel_id)
+```
+
+```
+## UC3XTzVzaHQEd30rQbuvCtTQ
+```
+
+---
+
+## Channel metadata
+
+
+```python
+# collect metadata
+*channel_metadata = yt.get_channel_metadata(channel_id)
+pd.DataFrame([channel_metadata]).head()
+```
+
+```
+##                  channel_id            title  account_creation_date keywords  \
+## 0  UC3XTzVzaHQEd30rQbuvCtTQ  LastWeekTonight           1.395179e+09     None   
+## 
+##                                          description  view_count video_count  \
+## 0  Breaking news on a weekly basis. Sundays at 11...  3470544302         400   
+## 
+##   subscription_count playlist_id_likes       playlist_id_uploads  \
+## 0            9070000                    UU3XTzVzaHQEd30rQbuvCtTQ   
+## 
+##                                            topic_ids country  \
+## 0  https://en.wikipedia.org/wiki/Politics|https:/...    None   
+## 
+##              collection_date  
+## 0 2022-10-17 12:24:19.607266
+```
+
+---
+
+## Subscriptions of the channel. 
+
+
+```python
+subs = yt.get_subscriptions(channel_id)
+*pd.DataFrame(subs).head()
+```
+
+```
+##   subscription_title   subscription_channel_id subscription_kind  \
+## 0          trueblood  UCPnlBOg4_NU9wdhRN-vzECQ   youtube#channel   
+## 1      GameofThrones  UCQzdMyuz0Lf4zo4uGcEujFw   youtube#channel   
+## 2                HBO  UCVTQuK2CaWaTgSsoNkn5AiQ   youtube#channel   
+## 3          HBOBoxing  UCWPQB43yGKEum3eW0P9N_nQ   youtube#channel   
+## 4            Cinemax  UCYbinjMxWwjRpp4WqgDqEDA   youtube#channel   
+## 
+##    subscription_publish_date            collection_date  
+## 0               1.395357e+09 2022-10-17 12:24:20.012856  
+## 1               1.395357e+09 2022-10-17 12:24:20.012900  
+## 2               1.395357e+09 2022-10-17 12:24:20.012935  
+## 3               1.395357e+09 2022-10-17 12:24:20.012978  
+## 4               1.424812e+09 2022-10-17 12:24:20.013012
+```
+
+---
+
+## List of videos of the channel
+
+You first need to convert the `channel_id` into a playlist id to get all the videos ever posted by a channel using a function from the `youtube_api_utils` in the package. 
+
+
+```python
+from youtube_api.youtube_api_utils import *
+*playlist_id = get_upload_playlist_id(channel_id)
+print(playlist_id)
+```
+
+```
+## UU3XTzVzaHQEd30rQbuvCtTQ
+```
+
+---
+
+
+```python
+## Get video ids
+*videos = yt.get_videos_from_playlist_id(playlist_id)
+df = pd.DataFrame(videos)
+df.head()
+```
+
+```
+##       video_id                channel_id  publish_date  \
+## 0  Ns8NvPPHX5Y  UC3XTzVzaHQEd30rQbuvCtTQ  1.666003e+09   
+## 1  kCOnGjvYKI0  UC3XTzVzaHQEd30rQbuvCtTQ  1.665398e+09   
+## 2  eJPLiT1kCSM  UC3XTzVzaHQEd30rQbuvCtTQ  1.664793e+09   
+## 3  uySgklnlX3Y  UC3XTzVzaHQEd30rQbuvCtTQ  1.664188e+09   
+## 4  DNy6F7ZwX8I  UC3XTzVzaHQEd30rQbuvCtTQ  1.662979e+09   
+## 
+##              collection_date  
+## 0 2022-10-17 12:24:20.742801  
+## 1 2022-10-17 12:24:20.742847  
+## 2 2022-10-17 12:24:20.742883  
+## 3 2022-10-17 12:24:20.742918  
+## 4 2022-10-17 12:24:20.742952
+```
+
+---
+
+## Collect video metadata
+
+Then you can get the video ids, and collect metadata, comments, among many others. 
+
+
+```python
+# id for videos as a list
+df.video_id.tolist()[:5]
+```
+
+```
+## ['Ns8NvPPHX5Y', 'kCOnGjvYKI0', 'eJPLiT1kCSM', 'uySgklnlX3Y', 'DNy6F7ZwX8I']
+```
+
+---
+
+
+```python
+#grab metadata
+*video_meta = yt.get_video_metadata(df.video_id.tolist()[:5])
+
+#visualize
+pd.DataFrame(video_meta[:5])
+```
+
+```
+##       video_id    channel_title                channel_id  video_publish_date  \
+## 0  Ns8NvPPHX5Y  LastWeekTonight  UC3XTzVzaHQEd30rQbuvCtTQ        1.666003e+09   
+## 1  kCOnGjvYKI0  LastWeekTonight  UC3XTzVzaHQEd30rQbuvCtTQ        1.665398e+09   
+## 2  eJPLiT1kCSM  LastWeekTonight  UC3XTzVzaHQEd30rQbuvCtTQ        1.664793e+09   
+## 3  uySgklnlX3Y  LastWeekTonight  UC3XTzVzaHQEd30rQbuvCtTQ        1.664188e+09   
+## 4  DNy6F7ZwX8I  LastWeekTonight  UC3XTzVzaHQEd30rQbuvCtTQ        1.662979e+09   
+## 
+##                                          video_title  \
+## 0  Transgender Rights II: Last Week Tonight with ...   
+## 1  Crime Reporting: Last Week Tonight with John O...   
+## 2  Museums: Last Week Tonight with John Oliver (HBO)   
+## 3  Bolsonaro: Last Week Tonight with John Oliver ...   
+## 4  Law &amp; Order: Last Week Tonight with John Olive...   
+## 
+##                                    video_description video_category  \
+## 0  John Oliver discusses the latest round of atta...             24   
+## 1  John Oliver discusses the outlets that cover c...             24   
+## 2  John Oliver discusses some of the world’s most...             24   
+## 3  John Oliver discusses Jair Bolsonaro, how he’s...             24   
+## 4  John Oliver discusses the wildly popular telev...             24   
+## 
+##   video_view_count video_comment_count video_like_count video_dislike_count  \
+## 0           756465               10602            48415                None   
+## 1          3124720                5865            88343                None   
+## 2          4641190               11997           133840                None   
+## 3          4555024               14698           168603                None   
+## 4          4967062                9008           118005                None   
+## 
+##                                     video_thumbnail video_tags  \
+## 0  https://i.ytimg.com/vi/Ns8NvPPHX5Y/hqdefault.jpg              
+## 1  https://i.ytimg.com/vi/kCOnGjvYKI0/hqdefault.jpg              
+## 2  https://i.ytimg.com/vi/eJPLiT1kCSM/hqdefault.jpg              
+## 3  https://i.ytimg.com/vi/uySgklnlX3Y/hqdefault.jpg              
+## 4  https://i.ytimg.com/vi/DNy6F7ZwX8I/hqdefault.jpg              
+## 
+##              collection_date  
+## 0 2022-10-17 12:24:22.299867  
+## 1 2022-10-17 12:24:22.299906  
+## 2 2022-10-17 12:24:22.299936  
+## 3 2022-10-17 12:24:22.299967  
+## 4 2022-10-17 12:24:22.299994
+```
+
+---
+
+## Collect Comments
+
+
+```python
+ids = df.video_id.tolist()[:5]
+
+# loop
+list_comments = []
+for video_id in ids:
+* comments = yt.get_video_comments(video_id, max_results=10)
+  list_comments.append(pd.DataFrame(comments))
+
+# concat
+df = pd.concat(list_comments)
+```
+
+---
+
+
+```python
+df.keys()
+```
+
+```
+## Index(['video_id', 'commenter_channel_url', 'commenter_channel_id',
+##        'commenter_channel_display_name', 'comment_id', 'comment_like_count',
+##        'comment_publish_date', 'text', 'commenter_rating', 'comment_parent_id',
+##        'collection_date', 'reply_count'],
+##       dtype='object')
+```
+
+---
+
+```python
+df.head()
+```
+
+```
+##       video_id                              commenter_channel_url  \
+## 0  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC8VchCbzlg5zMJ...   
+## 1  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCJoZbMsnQbUj6c...   
+## 2  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC5AfX7vW6V-Jfw...   
+## 3  Ns8NvPPHX5Y  http://www.youtube.com/channel/UC-ye5Ct8Ki5lur...   
+## 4  Ns8NvPPHX5Y  http://www.youtube.com/channel/UCTqd43X3UjO_Sa...   
+## 
+##        commenter_channel_id commenter_channel_display_name  \
+## 0  UC8VchCbzlg5zMJrdgAzht3w               BlackJacketJones   
+## 1  UCJoZbMsnQbUj6cLLbnfaphA                      SLangel18   
+## 2  UC5AfX7vW6V-JfwrQeNba5ng                            Inu   
+## 3  UC-ye5Ct8Ki5lurn4LME0F1w                         J Lang   
+## 4  UCTqd43X3UjO_SaXH0dkZlSg                        V XXIII   
+## 
+##                    comment_id  comment_like_count  comment_publish_date  \
+## 0  UgzdwggUyYfmCTZ62Yt4AaABAg                   0          1.666038e+09   
+## 1  UgzUNVbsN3oSMfPqf8l4AaABAg                   0          1.666038e+09   
+## 2  UgyJDtcn9cs3PaugtuR4AaABAg                   0          1.666038e+09   
+## 3  UgxxKwyMgmwypePXVwx4AaABAg                   1          1.666038e+09   
+## 4  UgxRvQaVJ7329_YXvKR4AaABAg                   0          1.666038e+09   
+## 
+##                                                 text commenter_rating  \
+## 0  wow this is so stupid. waiting for a single go...             none   
+## 1  But “anticipated” means they don’t know! And t...             none   
+## 2  the most infuriating thing about this is that ...             none   
+## 3  I'm leftist but this is not the hill to die on...             none   
+## 4  From all the recent John Oliver segments this ...             none   
+## 
+##   comment_parent_id            collection_date  reply_count  
+## 0              None 2022-10-17 12:24:22.827837            0  
+## 1              None 2022-10-17 12:24:22.827921            0  
+## 2              None 2022-10-17 12:24:22.827984            0  
+## 3              None 2022-10-17 12:24:22.828047            0  
+## 4              None 2022-10-17 12:24:22.828103            0
+```
+---
+## Related videos
+
+Cool enough, the API allows you to get a sense (not perfect) of what YT recommend to users. 
+
+
+```python
+*df = pd.DataFrame(yt.get_recommended_videos(ids[0]))
+df.channel_title
+```
+
+```
+## 0                    LastWeekTonight
+## 1                    LastWeekTonight
+## 2                    LastWeekTonight
+## 3                        Steve Mould
+## 4    The Daily Show with Trevor Noah
+## Name: channel_title, dtype: object
+```
+
+---
+
+## Search
+
+The youtube API also allows you to search for most popular videos using queries. 
+
+
+```python
+*df = pd.DataFrame(yt.search(q='urnas, fraude', max_results=10))
+df.keys()
+```
+
+```
+## Index(['video_id', 'channel_title', 'channel_id', 'video_publish_date',
+##        'video_title', 'video_description', 'video_category', 'video_thumbnail',
+##        'collection_date'],
+##       dtype='object')
+```
+
+```python
+df[["channel_title", "video_title"]]
+```
+
+```
+##             channel_title                                        video_title
+## 0                     UOL  Flávio Bolsonaro diz que não teve fraude nas u...
+## 1  Jovem Pan News - Bauru  Eleitor não conseguiu votar. Fraude ou manipul...
+## 2       Rádio BandNews FM  Eleições: Resultados falsos da votação no exte...
+## 3          Jovem Pan News  Urna eletrônica: houve fraude no 1º turno? – B...
+## 4              CNN Brasil  Análise: Documento do PL de Bolsonaro aponta f...
+## 5            vejapontocom   Giro VEJA | O novo alerta de Alexandre de Moraes
+## 6         Canal Nostalgia                  URNA ELETRÔNICA / Dá pra Hackear?
+## 7     Domingo Espetacular  Governo investiga diferença entre pesquisas el...
+## 8                  TV 247  Militares não encontram fraude nas urnas. E o ...
+## 9   Jornalismo TV Cultura  Eleições 2022: Confira momento em que Lula ult...
+```
+
+---
+class:center
+## Want more about Youtube Data? Read these papers!
+
+.pull-left[
+[Lei et al, Estimating the Ideology of Political YouTube Videos](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4088828)
+
+&lt;img src="./figs/yt1.png" width="80%" /&gt;
+]
+
+.pull-right[
+[Brown et al, Echo Chambers, Rabbit Holes, and Algorithmic Bias: How YouTube Recommends Content to Real Users](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4114905)
+
+&lt;img src="./figs/yt2.png" width="80%" /&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

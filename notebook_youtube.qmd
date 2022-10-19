@@ -1,0 +1,184 @@
+---
+title: "Workshop Analyzing Social Media Data - Youtube Data"
+author: "Tiago Ventura"
+date: "10/21/2020"
+toc: true
+format:
+  html:
+    theme: cosmo
+    html-math-method: katex
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+## Introduction
+
+This notebook walks through a [Python code](https://github.com/SMAPPNYU/krn_tools_demo/blob/main/youtube_data_api_demo.ipynb) developed by Megan Brown, Senior Engineer at the Center for Social Media and Politics at NYU. The tutorial uses the [youtube-data-api](https://youtube-data-api.readthedocs.io/en/latest/youtube_api.html) library.
+
+If you want to learn some different strategies to analyze Youtube data, particularly, a very clever way to estimate the political leaning of Youtube videos, I strongly suggest you to check out the article by [Lai et al, "Estimating Ideology of Youtube videos"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4088828)
+
+### What kind of data can you get from the Youtube API?
+
+Youtube has a very extensive api. There are a lot of data you can get access to. See a compreensive list [here](https://developers.google.com/youtube/v3/docs/)
+
+What is included in the package:
+
+- video metadata
+- channel metadata
+- playlist metadata
+- subscription metadata
+- featured channel metadata
+- comment metadata
+- search results
+
+## How to Install
+
+The software is on PyPI, so you can download it via `pip`
+   
+```{python}   
+# run in the command line 
+#pip install youtube-data-api
+```
+
+## How to get an API key
+
+### A quick guide: [https://developers.google.com/youtube/v3/getting-started](https://developers.google.com/youtube/v3/getting-started)
+
+1. You need a Google Account to access the Google API Console, request an API key, and register your application. You can use your GMail account for this if you have one.
+
+2. Create a project in the <a href="https://console.developers.google.com/apis/">Google Developers Console</a> and <a href="https://developers.google.com/youtube/registering_an_application">obtain authorization credentials</a> so your application can submit API requests.
+
+3. After creating your project, make sure the YouTube Data API is one of the services that your application is registered to use.
+
+    a. Go to the <a href="https://console.developers.google.com/apis/">API Console</a> and select the project that you just registered.
+
+    b. Visit the <a href="https://console.developers.google.com/apis/enabled">Enabled APIs page</a>. In the list of APIs, make sure the status is ON for the YouTube Data API v3. You do not need to enable OAuth 2.0 since there are no methods in the package that require it.
+    
+## An overview of Youtube API
+
+Calling the libraries
+
+```{python}
+# call some libraries
+import os
+import datetime
+import pandas as pd
+```
+
+```{python}
+# pass your keys
+from youtube_api import YouTubeDataAPI
+from youtube_api.youtube_api_utils import *
+from dotenv import load_dotenv
+
+# load keys from  environmental var
+load_dotenv() # .env file in cwd
+api_key = os.environ.get("YT_KEY")
+
+# create a client
+yt = YouTubeDataAPI(api_key)
+```
+
+
+## Starting with a channel name and getting some basic metadata
+
+Let's start with the `LastWeekTonight` channel
+
+[https://www.youtube.com/user/LastWeekTonight](https://www.youtube.com/user/LastWeekTonight)
+
+First we need to get the channel id
+
+```{python}
+channel_id = yt.get_channel_id_from_user('LastWeekTonight')
+print(channel_id)
+```
+
+## Channel metadata
+
+```{python}
+# collect metadata
+yt.get_channel_metadata(channel_id)
+```
+
+## Subscriptions of the channel. 
+
+```{python}
+pd.DataFrame(yt.get_subscriptions(channel_id))
+```
+
+## List of videos of the channel
+
+You first need to convert the `channel_id` into a playlist id to get all the videos ever posted by a channel using a function from the `youtube_api_utils` in the package. Then you can get the video ids, and collect metadata, comments, among many others. 
+
+```{python}
+from youtube_api.youtube_api_utils import *
+playlist_id = get_upload_playlist_id(channel_id)
+print(playlist_id)
+
+## Get video ids
+videos = yt.get_videos_from_playlist_id(playlist_id)
+df = pd.DataFrame(videos)
+```
+
+## Collect video metadata
+
+```{python}
+# id for videos as a list
+df.video_id.tolist()
+
+#grab metadata
+video_meta = yt.get_video_metadata(df.video_id.tolist()[:5])
+
+#visualize
+pd.DataFrame(video_meta[:2])
+
+```
+
+## Collect Comments
+
+```{python}
+ids = df.video_id.tolist()[:5]
+
+# loop
+list_comments = []
+for video_id in ids:
+  comments = yt.get_video_comments(video_id, max_results=10)
+  list_comments.append(pd.DataFrame(comments))
+
+# concat
+df = pd.concat(list_comments)
+df.head()
+```
+
+
+## Related videos
+
+Cool enough, the API allows you to get a sense (not perfect) of what YT recommend to users. 
+
+```{python}
+df = pd.DataFrame(yt.get_recommended_videos(ids[0])) 
+df.channel_title
+
+```
+
+## Search
+
+The youtube API also allows you to search for most popular videos using queries. 
+
+```{python}
+df = pd.DataFrame(yt.search(q='urnas, fraude', max_results=10))
+df.keys()
+df[["channel_title", "video_title"]]
+```
+
+## Want more? 
+
+If you want to learn more about youtube, you shoudl definitely check these two paper from my CSMaP colleagues about Youtube.
+
+- [Lei et al, Estimating the Ideology of Political YouTube Videos](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4088828)
+
+- [Brown et al, Echo Chambers, Rabbit Holes, and Algorithmic Bias: How YouTube Recommends Content to Real Users](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4114905)
