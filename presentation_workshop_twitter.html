@@ -565,7 +565,7 @@ summary(net)
 
 
 ```
-## IGRAPH 4afcf56 DN-- 79886 154583 -- 
+## IGRAPH 4e17cfe DN-- 79886 154583 -- 
 ## + attr: name (v/c)
 ```
 ]
@@ -678,7 +678,7 @@ tweets_tidy_rt %&gt;%
 
 
 ```
-## IGRAPH 4afcf56 DN-- 79886 154583 -- 
+## IGRAPH 4e17cfe DN-- 79886 154583 -- 
 ## + attr: name (v/c), text (e/c), idauth (e/c), namehub (e/c), hash
 ## | (e/x), domain (e/c)
 ```
@@ -712,7 +712,7 @@ summary(net)
 ```
 
 ```
-## IGRAPH 4afcf56 DN-- 79886 154583 -- 
+## IGRAPH 4e17cfe DN-- 79886 154583 -- 
 ## + attr: name (v/c), outdegree (v/n), indegree (v/n), text (e/c), idauth
 ## | (e/c), namehub (e/c), hash (e/x), domain (e/c)
 ```
@@ -891,23 +891,23 @@ users_most_retweets
 ```
 ## # A tibble: 30 × 16
 ## # Groups:   membership [3]
-##    name          ind membe…¹ locat…² name1 verif…³ prote…⁴ entit…⁵ url   profi…⁶
-##    &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;   &lt;lgl&gt;   &lt;list&gt;  &lt;chr&gt; &lt;chr&gt;  
-##  1 838099262    2480       4 Rio de… Patr… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  2 1404506222…  1549       4 &lt;NA&gt;    Cent… FALSE   FALSE   &lt;df&gt;    http… https:…
-##  3 65720380     1451       4 Rio de… Glau… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  4 1330082400…  1331       4 São Pa… Frot… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  5 31139434     1245       4 Curiti… Glei… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  6 57771039     1201       4 Santos… Rena… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  7 58288300     1065       4 São Pa… Gers… TRUE    FALSE   &lt;df&gt;    http… https:…
-##  8 1097073004…  1056       4 &lt;NA&gt;    Pedr… FALSE   FALSE   &lt;NULL&gt;  &lt;NA&gt;  https:…
-##  9 14594698     1014       4 Brasil  UOL … TRUE    FALSE   &lt;df&gt;    http… https:…
-## 10 16794066      872       4 &lt;NA&gt;    Blog… TRUE    FALSE   &lt;NULL&gt;  &lt;NA&gt;  https:…
+##    name          ind membe…¹ name1 prote…² descr…³ entit…⁴ id    verif…⁵ profi…⁶
+##    &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;   &lt;list&gt;  &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;  
+##  1 838099262    2480       4 Patr… FALSE   ""      &lt;df&gt;    8380… TRUE    https:…
+##  2 1404506222…  1549       4 Cent… FALSE   "Acomp… &lt;df&gt;    1404… FALSE   https:…
+##  3 65720380     1451       4 Glau… FALSE   "Deput… &lt;df&gt;    6572… TRUE    https:…
+##  4 1330082400…  1331       4 Frot… FALSE   "🇧🇷Pai… &lt;df&gt;    1330… TRUE    https:…
+##  5 31139434     1245       4 Glei… FALSE   "Deput… &lt;df&gt;    3113… TRUE    https:…
+##  6 57771039     1201       4 Rena… FALSE   "Renat… &lt;df&gt;    5777… TRUE    https:…
+##  7 58288300     1065       4 Gers… FALSE   "Infec… &lt;df&gt;    5828… TRUE    https:…
+##  8 1097073004…  1056       4 Pedr… FALSE   "Geógr… &lt;NULL&gt;  1097… FALSE   https:…
+##  9 14594698     1014       4 UOL … FALSE   "Acomp… &lt;df&gt;    1459… TRUE    https:…
+## 10 16794066      872       4 Blog… FALSE   "Acomp… &lt;NULL&gt;  1679… TRUE    https:…
 ## # … with 20 more rows, 7 more variables: entities$description &lt;df[,2]&gt;,
-## #   description &lt;chr&gt;, created_at &lt;chr&gt;, username &lt;chr&gt;,
-## #   public_metrics &lt;df[,4]&gt;, id &lt;chr&gt;, pinned_tweet_id &lt;chr&gt;, and abbreviated
-## #   variable names ¹​membership, ²​location, ³​verified, ⁴​protected,
-## #   ⁵​entities$url$urls, ⁶​profile_image_url
+## #   username &lt;chr&gt;, location &lt;chr&gt;, url &lt;chr&gt;, created_at &lt;chr&gt;,
+## #   public_metrics &lt;df[,4]&gt;, pinned_tweet_id &lt;chr&gt;, and abbreviated variable
+## #   names ¹​membership, ²​protected, ³​description, ⁴​entities$url$urls, ⁵​verified,
+## #   ⁶​profile_image_url
 ## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
@@ -1073,20 +1073,20 @@ glimpse(pelosi_network)
 ```
 ## Rows: 429
 ## Columns: 14
-## $ url               &lt;chr&gt; "https://t.co/v695zCnmxN", "https://t.co/4xG26ktTyt"…
+## $ description       &lt;chr&gt; "Representative for Ohio’s Eleventh Congressional Di…
+## $ verified          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+## $ username          &lt;chr&gt; "RepShontelBrown", "RepAlGreen", "RepJoeGarcia", "Re…
+## $ name              &lt;chr&gt; "Rep. Shontel Brown", "Congressman Al Green", "Rep. …
+## $ pinned_tweet_id   &lt;chr&gt; "1463532439456952323", "1422610928756043778", NA, NA…
+## $ id                &lt;chr&gt; "1456381091598700556", "156333623", "937801969", "11…
+## $ profile_image_url &lt;chr&gt; "https://pbs.twimg.com/profile_images/14707589214261…
+## $ entities          &lt;df[,2]&gt; &lt;data.frame[26 x 2]&gt;
+## $ url               &lt;chr&gt; "https://t.co/v695zCnmxN", "https://t.co/4xG26ktT…
+## $ created_at        &lt;chr&gt; "2021-11-04T22:01:33.000Z", "2010-06-16T17:20:23.000…
 ## $ protected         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…
 ## $ public_metrics    &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
-## $ description       &lt;chr&gt; "Representative for Ohio’s Eleventh Congressional…
-## $ verified          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
-## $ created_at        &lt;chr&gt; "2021-11-04T22:01:33.000Z", "2010-06-16T17:20:23.000…
-## $ username          &lt;chr&gt; "RepShontelBrown", "RepAlGreen", "RepJoeGarcia", "Re…
-## $ id                &lt;chr&gt; "1456381091598700556", "156333623", "937801969", "11…
-## $ name              &lt;chr&gt; "Rep. Shontel Brown", "Congressman Al Green", "Rep. …
-## $ entities          &lt;df[,2]&gt; &lt;data.frame[26 x 2]&gt;
-## $ pinned_tweet_id   &lt;chr&gt; "1463532439456952323", "1422610928756043778", NA, NA…
-## $ profile_image_url &lt;chr&gt; "https://pbs.twimg.com/profile_images/14707589214…
 ## $ location          &lt;chr&gt; NA, "Houston, TX &amp; Washington, DC", "Miami, Florida"…
-## $ from_id           &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "157…
+## $ from_id           &lt;chr&gt; "15764644", "15764644", "15764644", "15764644", "…
 ```
 
 ---
@@ -1138,21 +1138,21 @@ glimpse(pelosi_tl)
 ```
 ## Rows: 100
 ## Columns: 15
-## $ context_annotations    &lt;list&gt; [&lt;data.frame[7 x 2]&gt;], [&lt;data.frame[14 x 2]&gt;],…
-## $ referenced_tweets      &lt;list&gt; [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;,…
-## $ entities               &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
-## $ id                     &lt;chr&gt; "1582556778608218118", "1582492989015805953"…
-## $ text                   &lt;chr&gt; "Anna May Wong was a dazzling, trailblazing tal…
-## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter Web App", "Twitt…
-## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
-## $ conversation_id        &lt;chr&gt; "1582556778608218118", "1582492989015805953", "…
-## $ created_at             &lt;chr&gt; "2022-10-19T02:18:33.000Z", "2022-10-18T22:05:0…
-## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en",…
-## $ edit_history_tweet_ids &lt;list&gt; "1582556778608218118", "1582492989015805953", "…
-## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "15764644"…
 ## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
+## $ author_id              &lt;chr&gt; "15764644", "15764644", "15764644", "1576464…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
+## $ entities               &lt;df[,4]&gt; &lt;data.frame[26 x 4]&gt;
+## $ created_at             &lt;chr&gt; "2022-10-20T00:00:35.000Z", "2022-10-19T02:18:3…
+## $ text                   &lt;chr&gt; "American Rescue Plan. Infrastructure Law. C…
+## $ edit_history_tweet_ids &lt;list&gt; "1582884446432563203", "1582556778608218118", "…
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[28 x 2]&gt;], [&lt;data.frame[7 x 2]&gt;], …
+## $ conversation_id        &lt;chr&gt; "1582884446432563203", "1582556778608218118", …
+## $ id                     &lt;chr&gt; "1582884446432563203", "1582556778608218118", …
+## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en",…
+## $ source                 &lt;chr&gt; "Twitter for iPhone", "Twitter for iPhone", "Tw…
+## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, …
 ## $ attachments            &lt;df[,1]&gt; &lt;data.frame[26 x 1]&gt;
-## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, "15764644", NA,…
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, "15764644",…
 ```
 
 ---
@@ -1178,21 +1178,21 @@ glimpse(pelosi_likes) # she mostly liked her own tweets
 ```
 ## Rows: 12
 ## Columns: 16
-## $ id                     &lt;chr&gt; "1230592378790129664", "819738961887264768", "8…
-## $ edit_history_tweet_ids &lt;list&gt; "1230592378790129664", "819738961887264768", "…
-## $ created_at             &lt;chr&gt; "2020-02-20T20:37:41.000Z", "2017-01-13T02:52:5…
+## $ text                   &lt;chr&gt; "That moment when you hear @presmccartney say t…
 ## $ public_metrics         &lt;df[,4]&gt; &lt;data.frame[12 x 4]&gt;
-## $ text                   &lt;chr&gt; "That moment when you hear @presmccartney sa…
+## $ edit_history_tweet_ids &lt;list&gt; "1230592378790129664", "819738961887264768",…
 ## $ entities               &lt;df[,4]&gt; &lt;data.frame[12 x 4]&gt;
+## $ created_at             &lt;chr&gt; "2020-02-20T20:37:41.000Z", "2017-01-13T02:52:…
+## $ source                 &lt;chr&gt; "Buffer", "Twitter Web Client", "Twitter for…
 ## $ lang                   &lt;chr&gt; "en", "en", "en", "en", "en", "en", "en", "en",…
-## $ context_annotations    &lt;list&gt; [&lt;data.frame[5 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, [&lt;dat…
+## $ id                     &lt;chr&gt; "1230592378790129664", "819738961887264768", "8…
+## $ context_annotations    &lt;list&gt; [&lt;data.frame[5 x 2]&gt;], &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.f…
 ## $ author_id              &lt;chr&gt; "17025399", "281593711", "39547629", "774337933…
-## $ conversation_id        &lt;chr&gt; "1230592378790129664", "819738961887264768", "…
-## $ source                 &lt;chr&gt; "Buffer", "Twitter Web Client", "Twitter for iP…
-## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE…
+## $ possibly_sensitive     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ conversation_id        &lt;chr&gt; "1230592378790129664", "819738961887264768", "8…
 ## $ attachments            &lt;df[,1]&gt; &lt;data.frame[12 x 1]&gt;
-## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, "15764644", NA, NA, NA, NA, NA, NA,…
 ## $ referenced_tweets      &lt;list&gt; &lt;NULL&gt;, &lt;NULL&gt;, &lt;NULL&gt;, [&lt;data.frame[1 x 2]&gt;], …
+## $ in_reply_to_user_id    &lt;chr&gt; NA, NA, NA, "15764644", NA, NA, NA, NA, NA, NA,…
 ## $ from_id                &lt;chr&gt; "15764644", "15764644", "15764644", "1576464…
 ```
 
