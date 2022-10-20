@@ -306,14 +306,6 @@ tweets <-
 
 
 ---
-
-.center[
-```{r acad_opt,  echo=FALSE, out.width = "70%"}
-knitr::include_graphics("figs/acad_opt.png") 
-```
-]
-
----
 ## Where does the data live?
 
 .center[
