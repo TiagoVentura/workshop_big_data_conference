@@ -70,10 +70,6 @@ class:middle
 
 --
 
-Already widely adopted by mainstream media broadcasting: news TV shows, sports programs, and political debates.
-
---
-
 Popular among the younger generations.
 
 - Twitch (Amazon)
@@ -90,11 +86,9 @@ Popular among the younger generations.
 
 
 ---
-class: middle, center
+### Bolsonaro's Facebook Lives
 
-### Jair Bolsonaro
-
-```{r echo=FALSE, out.width="80%"}
+```{r echo=FALSE, out.width="100%"}
 knitr::include_graphics("./figs/bolso.png")
 ```
 
