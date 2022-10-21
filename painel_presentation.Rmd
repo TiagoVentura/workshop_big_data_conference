@@ -1,5 +1,5 @@
 ---
-title: "The Effect of Streaming Chats on Misperceptions about Mass Public Opinion"
+title: "The Effect of Streaming Chats on Political Misperceptions"
 author: "Tiago Ventura | Center for Social Media and Politics | NYU"
 date: "<span style = 'font-size: 70%;'> Big Data for Development and Governance, 10/21/2022 </span> <br><br> <span style = 'font-size: 70%; font-style: italic'> Joint work with  Kevin Munger, Katherine McCabe, Victory Asbury and Keng-Chi Chang </span>"
 output:
