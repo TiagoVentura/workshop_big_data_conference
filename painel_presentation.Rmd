@@ -1,7 +1,7 @@
 ---
-title: "The Effect of Streaming Chat on Perceptions of Political Debates"
+title: "The Effect of Streaming Chats on Misperceptions about Mass Public Opinion"
 author: "Tiago Ventura | Center for Social Media and Politics | NYU"
-date: "<span style = 'font-size: 70%;'> Big Data for Development and Governance, 10/21/2022 </span> <br><br> <span style = 'font-size: 70%; font-style: italic'> Joint work with  Kevin Munger, Katherine McCabe, Victory Asbury and Keng-Chi </span>"
+date: "<span style = 'font-size: 70%;'> Big Data for Development and Governance, 10/21/2022 </span> <br><br> <span style = 'font-size: 70%; font-style: italic'> Joint work with  Kevin Munger, Katherine McCabe, Victory Asbury and Keng-Chi Chang </span>"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "custom.css"]
@@ -37,11 +37,11 @@ class:middle
 
 --
 
-`r icons::fontawesome("arrow-alt-circle-right")` **Streaming chats (e.g Facebook Lives, Twitch...) accentuate misperceptions about political events**
+`r icons::fontawesome("arrow-alt-circle-right")` **Streaming chats (e.g Facebook Lives, Twitch...) accentuate misperceptions about mass public opinion**
 
 - Streaming chats are a representation of what social media is: 
 
-      -  information processing + audience engagement + contextual cues
+      -  information consumption + audience engagement + contextual cues
 
 --
 
@@ -99,15 +99,9 @@ knitr::include_graphics("./figs/bolso.png")
 ```
 
 ---
-class: center, middle
-
-
-### What are the effects of <a style="color:red"> streaming chats </a> on the public viewing experiences and political misperceptions? 
-
----
 class:middle
 
-### Streaming Chats and Perceptions of Political Debates
+### Research Design
 
 **We combine a large scale ''field" experiment" with data scrapped from Facebook streaming chats.**
 
@@ -121,7 +115,7 @@ class:middle
 
 --
 
-.red[We then surveyed the respondents after the debate and measured the effects of streaming chats.]
+.red[To complement our analysis, we scrapped the comments from Facebook Lives ]
 
 --
 
@@ -141,23 +135,9 @@ knitr::include_graphics("./figs/screenshot-abc.png")
 ]
 
 ---
+class: center, middle, inverse
 
-## Text Analysis
-
-To complement our analysis, we scrapped the comments on the two platforms. 
-
-- 300 Comments on Expert + 6915 on Facebook. 
-
-- Performed Dictionary Methods Sentiment Analysis. 
-
-- Labeled the comments manually to identify topics. 
-
-- Deep Learning Models to identify toxicity. 
-
----
-class:inverse, middle, center
-
-## Text Analysis: Validating Theoretical Premises
+## Understanding comments on streaming chats.
 
 ---
 ### High Frequency
@@ -187,7 +167,7 @@ knitr::include_graphics("./figs/topics_3by_cand.png")
 ]
 
 ---
-### Mostly Negative Polarity about the Candidates
+### Mostly Negative Polarity About the Candidates
 
 .center[
 ```{r  echo=FALSE, out.width= '80%'}
@@ -254,7 +234,7 @@ knitr::include_graphics("./figs/polls_on_positive_comments.png")
       - Distort inferences about candidate viability.
 
 ---
-## Next Steps: Contextual cues and majority illusion. 
+## Next steps: contextual cues and majority illusion. 
 
 .pull-left[
 
@@ -269,3 +249,9 @@ knitr::include_graphics("./figs/tweet.png")
 knitr::include_graphics("./figs/qttweet.png")
 ```
 ]
+
+---
+class:center, middle, inverse
+
+# Thank you!
+
