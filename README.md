@@ -1,8 +1,9 @@
 # Workshop: Collecting and Analyzing Social Media Data
 
 
-This repository contains all the materials for the workshop **Collecting and Analyzing Social Media Data** I offered at [The Big Data for Development and Governance](https://web.sas.upenn.edu/mlp-devlab/big-data-for-development-and-governance/) conference on October 20, 2022 at the University of Pennsylvania. The conference is organized by the DevLab@Penn/PDRI and co-sponsored by Perry World House, USAID’s Center for Democracy, Human Rights, USAID’s Governance and Innovation, Technology, and Research (ITR) Hub, and Penn’s SAS Data Driven Discovery Initiative. 
+This repository contains all the materials for the workshop **Collecting and Analyzing Social Media Data** I offered at [The Big Data for Development and Governance](https://web.sas.upenn.edu/mlp-devlab/big-data-for-development-and-governance/) conference on October 20, 2022 at the University of Pennsylvania. 
 
+The conference is organized by the DevLab@Penn/PDRI and co-sponsored by Perry World House, USAID’s Center for Democracy, Human Rights, USAID’s Governance and Innovation, Technology, and Research (ITR) Hub, and Penn’s SAS Data Driven Discovery Initiative. 
 
 The one-hour workshop **Collecting and Analyzing Social Media Data** provides an overview of the ways in which social media data can be gathered, analyzed and used for research. This is a practical session, walking participants through data sources and beginner code to understand basic characteristics of the data.
 
@@ -35,7 +36,7 @@ git clone https://github.com/TiagoVentura/workshop_big_data_conference
 
 ```
 
-Enjoy!!
+Enjoy and let me know if you have suggestions!
 
 
 
